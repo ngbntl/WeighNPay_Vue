@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@import "antd/dist/antd.css";
+
+.ant-btn-primary {
+  background-color: #1677ff;
+}
+.ant-modal-content {
+  width: 120%;
+}

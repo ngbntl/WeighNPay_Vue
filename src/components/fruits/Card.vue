@@ -21,11 +21,19 @@
   
   
   
+  
 <script>
+
 export default {
     name: 'Card',
-    props: ['fruitProps'],
+    props: {
+        fruitProps: {
+            type: Object,
+            required: true,
+        },
+
+    },
 
 };
+
 </script>
-  

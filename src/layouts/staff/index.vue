@@ -3,7 +3,7 @@
 
         <div class="md:w-1/6 lg:flex xs:hidden xs:w-1/12">
             <a-list bordered class="w-full ">
-                <TheMenu />
+                <menu-staff />
 
 
             </a-list>
@@ -18,13 +18,14 @@
 
 <script>
 
+import MenuStaff from '../../components/menu/MenuStaff.vue';
 
-import TheMenu from '../../components/menu/TheMenu.vue';
+
 
 
 export default {
     middleware: 'auth',
-    components: { TheMenu },
+    components: { MenuStaff },
 
 }
 </script>

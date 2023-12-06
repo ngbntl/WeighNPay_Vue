@@ -16,53 +16,136 @@
             <a href="/"> <span>WeighNPay</span></a>
         </div>
 
-        <div class="btn absolute right-32 top-0 mt-1 xs:hidden lg:flex">
-            <button
-                class="w-32 h-10 bg-white cursor-pointer rounded-md border-2 border-[#9748FF] shadow-[inset_0px_-2px_0px_1px_#9748FF] group hover:bg-[#9748FF] transition duration-300 ease-in-out mr-5">
-                <router-link :to="{name: 'login'}">
-                    <span class="font-medium text-[#333] group-hover:text-white">Đăng nhập</span>
-                </router-link>
-            </button>
-            <button
-                class="w-32 h-10 bg-white cursor-pointer rounded-md border-2 border-[#9748FF] shadow-[inset_0px_-2px_0px_1px_#9748FF] group hover:bg-[#9748FF] transition duration-300 ease-in-out">
-                <span class="font-medium text-[#333] group-hover:text-white">Đăng ký</span>
-            </button>
+
+        <div>
+            <div class="absolute lg:mr-36 top-1 xs:right-5 xs:mr-0">
+                <div v-if="check">
+                    <a-dropdown class="left-0" :trigger="['click']">
+                        <a class="ant-dropdown-link" @click.prevent>
+                            <img src="https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg"
+                                id="avatarButton" type="button" data-dropdown-placement="bottom-start"
+                                class="w-10 h-10 rounded-full cursor-pointer" alt="User dropdown">
+
+                        </a>
+                        <template #overlay>
+                            <a-menu class="relative w-48">
+                                <a-menu-item>
+                                    <div class="font-bold text-gray-500">{{users.name}}</div>
+                                    <div class=" truncate text-gray-500">{{users.email}}</div>
+                                </a-menu-item>
+                                <a-menu-item>
+                                    <router-link :to="{name: 'admin-profile'}">
+                                        <span class="block px-4 py-2 rounded-md hover:bg-gray-200  ">Tài khoản</span>
+                                    </router-link>
+                                </a-menu-item>
+                                <a-menu-item>
+
+                                    <a href="#" class="block px-4 py-2 rounded-md hover:bg-gray-200">Cài đặt</a>
+                                </a-menu-item>
+                                <a-menu-item>
+                                    <span @click="logout()"
+                                        class="block px-4 py-2 text-sm text-gray-500 rounded-md hover:bg-gray-200 ">Đăng
+                                        xuất</span>
+                                </a-menu-item>
+                            </a-menu>
+                        </template>
+                    </a-dropdown>
+
+
+                    <div>
+
+                        <a-drawer v-model:open="open" :width="250" class="custom-class relative w-40"
+                            root-class-name="root-class-name" :root-style="{ color: 'blue' }" style="color: gray"
+                            title="Menu" placement="left">
+
+                            <the-menu />
+
+                        </a-drawer>
+                    </div>
+                </div>
+                <div v-if="!check">
+                    <div class="btn absolute right-32 top-0 mt-1 xs:hidden lg:flex">
+                        <button
+                            class="w-28 h-8 bg-white cursor-pointer rounded-md border-2 border-blue-600 shadow-[inset_0px_-2px_0px_1px_blue-500] group hover:bg-blue-600 transition duration-300 ease-in-out mr-5">
+                            <router-link :to="{name: 'login'}">
+                                <span class="font-medium text-[#333] group-hover:text-white">Đăng nhập</span>
+                            </router-link>
+                        </button>
+                        <button
+                            class="w-28 h-8 bg-white cursor-pointer rounded-md border-2 border-blue-600 shadow-[inset_0px_-2px_0px_1px_blue-500] group hover:bg-blue-600 transition duration-300 ease-in-out mr-5">
+                            <router-link :to="{name:'register'}">
+                                <span class="font-medium text-[#333] group-hover:text-white">Đăng ký</span>
+                            </router-link>
+                        </button>
+                    </div>
+                    <div>
+                        <a-drawer v-model:open="open" class="custom-class" root-class-name="root-class-name"
+                            :root-style="{ color: 'blue' } " style="color: gray" title="Menu" placement="left">
+                            <p>Đăng nhập</p>
+                            <p>Đăng ký</p>
+
+                        </a-drawer>
+                    </div>
+                </div>
+
+            </div>
+            <div>
+
+            </div>
         </div>
 
 
     </div>
-
-    <a-drawer v-model:open="open" class="custom-class" root-class-name="root-class-name" :root-style="{ color: 'blue' }"
-        style="color: gray" title="Menu" placement="left">
-        <p>Đăng nhập</p>
-        <p>Đăng ký</p>
-
-    </a-drawer>
 </template>
-
 <script>
-
-import { ref } from 'vue';
+import { reactive, ref, watch } from 'vue';
+import { useAuthStore } from '../../stores/modules/auth';
+import TheMenu from '../menu/TheMenu.vue';
 
 export default {
+    components: { TheMenu },
 
     setup() {
+        const users = reactive({
+            name: 'Bao',
+            email: 'bao@gmail.com',
+            avt: '../assets/img/avt.jpg',
+        });
+
+        const authStore = useAuthStore();
         const open = ref(false);
+        const check = ref(localStorage.getItem('isLoggedIn') === 'true');
+
+        watch(check, (newVal) => {
+            localStorage.setItem('isLoggedIn', newVal.toString());
+        });
+
         const showDrawer = () => {
             open.value = true;
         };
 
+        const logout = () => {
+            const credentials = {
+                email: localStorage.getItem('email'),
+                password: localStorage.getItem('password'),
+            };
+            authStore.logout(credentials);
+        };
+
         return {
             open,
-            showDrawer
+            showDrawer,
+            authStore,
+            users,
+            logout,
+            check,
         };
-    }
-
+    },
 };
-
 </script>
 
-
 <style scoped>
-
+.ant-drawer {
+  width: 100px;
+}
 </style>

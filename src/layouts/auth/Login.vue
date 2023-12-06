@@ -35,9 +35,8 @@
 <script setup>
 import { ref } from 'vue';
 import { useAuthStore } from '../../stores/modules/auth';
-// Initialize the store
 const authStore = useAuthStore();
-// Form data and errors
+
 const formData = ref({
   email: '',
   password: ''
@@ -46,6 +45,8 @@ const errors = ref({
   email: '',
   password: ''
 });
+
+
 // Validate email
 function isValidEmail(email) {
   return /^[^@]+@\w+(\.\w+)+\w$/.test(email);
@@ -83,7 +84,11 @@ const login = () => {
   };
   // Call the store login action here with the credentials
   authStore.login(credentials);
+
+
 };
+
+
 </script>
 
 

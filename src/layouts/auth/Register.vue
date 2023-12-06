@@ -1,8 +1,8 @@
 <template>
     <!-- <p class="heading text-center text-xl mt-96">WeighNPay</p> -->
-    <div class="absolute lg:left-1/3 mx-36 justify-center mt-32">
+    <div class="absolute lg:left-1/3 algin-center justify-center mt-32 ">
 
-        <form class="form_main" @submit.prevent="handleSubmit">
+        <form class="form_main " @submit.prevent="handleSubmit">
             <p class="heading">Đăng ký</p>
             <div class="inputContainer">
                 <svg viewBox="0 0 16 16" fill="#2e2e2e" height="16" width="16" xmlns="http://www.w3.org/2000/svg"
@@ -21,7 +21,7 @@
                     class="inputIcon">
 
                 </svg>
-                <input placeholder="Họ và tên" id="username" class="inputField" type="text" v-model="formData.email"
+                <input placeholder="Họ và tên" id="username" class="inputField" type="text" v-model="formData.name"
                     v-bind:class="{'border-red-500': errors.email}" @input="validateEmail">
                 <div class="text-red-500 absolute mt-12 pt-3 left-8 text-xs ">{{ errors.email }}</div>
             </div>
@@ -44,7 +44,7 @@
                     v-model="formData.password" @input="validatePassword" :class="{'border-red-500': errors.password}">
                 <div class="text-red-500 absolute mt-12 pt-3 left-8 text-xs b">{{ errors.password }}</div>
             </div>
-            <button id="button" type="submit" class="bg-purplehov mt-4 active:scale-90 mt-4 px-4 py-2">Đăng ký</button>
+            <button id="button" type="submit" class="bg-blue-500 mt-4 active:scale-90 mt-4 px-4 py-2">Đăng ký</button>
             <div class="signupContainer">
 
 
@@ -102,7 +102,7 @@ export default {
 </script>
     
 <style>.form_main {
-      width: 320px;
+      width: 375px;
       display: flex;
       flex-direction: column;
       align-items: center;

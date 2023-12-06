@@ -22,15 +22,6 @@
                         <InboxOutlined class="relative -top-1 mr-2" /> Hàng hóa
                     </span>
                 </router-link>
-
-            </a-menu-item>
-            <a-menu-item key="admin-createBills">
-                <router-link :to="{name: 'admin-createBills'}">
-                    <span>
-                        <ProfileOutlined class="relative -top-1 mr-2" /> Tạo đơn
-                    </span>
-                </router-link>
-
             </a-menu-item>
             <div class="lg:hidden mt-10">
                 <a-menu>
@@ -57,17 +48,16 @@
 <script>
 import { UserOutlined, ProfileOutlined, InboxOutlined } from '@ant-design/icons-vue';
 import { storeToRefs } from "pinia";
-import { useMenu } from "../../stores/modules/use-menu.js";
+import { useStaffMenu } from "../../stores/modules/staff-menu.js";
 import { defineComponent } from 'vue';
 export default defineComponent({
     components: {
         UserOutlined,
         ProfileOutlined,
-        InboxOutlined,
-
+        InboxOutlined
     },
     setup() {
-        const store = useMenu();
+        const store = useStaffMenu();
         return {
             ...storeToRefs(store)
         };

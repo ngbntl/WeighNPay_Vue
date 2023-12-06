@@ -1,13 +1,14 @@
 <template>
-  <home-page />
+  <the-header />
   <router-view></router-view>
 </template>
 
 <script>
+import TheHeader from './components/header/TheHeader.vue'
 import HomePage from "./pages/HomePage.vue"
 
 export default {
-  components: { HomePage },
+  components: { HomePage, TheHeader },
 }
 
 </script>

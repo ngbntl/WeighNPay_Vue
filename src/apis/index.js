@@ -1,7 +1,10 @@
-import request from "axios";
+import axios from "axios";
 
+const baseURL = import.meta.env.VUE_APP_API || "http://localhost:8080"; // Thay đổi URL mặc định nếu cần
+axios.defaults.headers.common["Authorization"] =
+  "Bearer" + localStorage.getItem("token");
 export default () => {
-  return request.create({
-    baseURL: process.env.VUE_APP_API,
+  return axios.create({
+    baseURL: baseURL,
   });
 };

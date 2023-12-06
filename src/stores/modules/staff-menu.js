@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-export const useMenu = defineStore("menuId", {
+export const useStaffMenu = defineStore("menuId", {
   state: () => ({
     selectedKeys: [],
     openKeys: [],
