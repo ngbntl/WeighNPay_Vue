@@ -15,16 +15,20 @@ export const useAuthStore = defineStore("auth", {
         const response = await AuthServices.login(credentials);
         localStorage.setItem("token", response.data.access_token);
         const identity = response.data.identity;
+        //console.log(identity);
         if (identity.substring(0, 2) == "AD") {
-          this.role = "admin";
+          this.role = true;
           this.isLoggedIn = true;
           localStorage.setItem("role", this.role);
           localStorage.setItem("isLoggedIn", this.isLoggedIn);
           // console.log(localStorage.getItem("isLoggedIn"));
-          router.push("/admin");
+          router.push("admin/staffs");
         } else if (identity.subString(0, 2) == "NV") {
-          this.role = "staff";
+          this.role = false;
           this.isLoggedIn = true;
+          localStorage.setItem("role", this.role);
+          localStorage.setItem("isLoggedIn", this.isLoggedIn);
+          router.push("staff");
         }
       } catch (error) {
         console.error("Lỗi đăng nhập:", error.message);

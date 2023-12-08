@@ -7,7 +7,7 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-3 py-3 text-xs font-bold text-left text-gray-500 uppercase">
-                                    ID
+                                    STT
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
                                     Loại quả
@@ -26,7 +26,7 @@
                         <tbody class="divide-y divide-gray-200">
                             <tr v-for="(fruit, index) in fruits" :key="index" class="text-left">
                                 <td class="px-3 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                                    {{ fruit.ID }}
+                                    {{ index+1 }}
                                 </td>
                                 <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                                     {{ fruit.name }}
@@ -39,7 +39,7 @@
                                 </td>
                                 <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                     <button @click="deleteFruit(fruit.ID)"
-                                        class="text-red-500 hover:text-red-700">Delete</button>
+                                        class="text-red-500 hover:text-red-700">Xóa</button>
                                 </td>
                             </tr>
                         </tbody>
@@ -65,7 +65,7 @@ export default {
         const useFruits = useFruitStore();
         const deleteFruit = (fruitID) => {
             useFruits.deleteFruit(fruitID);
-            window.location.reload();
+
         };
         const openEditModal = (fruit) => {
             console.log(fruit);

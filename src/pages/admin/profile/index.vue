@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-white rounded-md h-1/3">
+    <div class="bg-white rounded-md h-2/3">
         <update-profile />
     </div>
 </template>
@@ -14,19 +14,7 @@ export default {
     data() {
         return {
             isOpen: false,
-            name: "",
 
-            user: {
-
-                email: "anhaaa@gmail.com",
-                name: "Nguyễn Văn A",
-                phoneNum: "0373650403",
-
-                address: "123 Nguyen Hue, Da Kao Ward, District 8, Ho Chi Minh City",
-                birthday: "05/4/2003",
-                gender: true,
-                avatar: "https://chuphinhthe.com/upload/product/5x5-8800.jpg"
-            },
 
         };
     },

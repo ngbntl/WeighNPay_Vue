@@ -24,8 +24,8 @@ export default {
         fruitStore.getAllFruits().then((fruits) => {
             useAuth.isLoggedIn = false
             useFruits.value = fruits;
-
-            ; console.log(fruits);
+            localStorage.setItem("isLoggedIn", false);
+            console.log(fruits);
         });
         return {
             useFruits,

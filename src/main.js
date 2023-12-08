@@ -14,6 +14,7 @@ import {
   Button,
   ConfigProvider,
   Avatar,
+  Form,
 } from "ant-design-vue";
 import "./style.css";
 
@@ -42,6 +43,7 @@ app.use(Modal);
 app.use(Button);
 app.use(ConfigProvider);
 app.use(Avatar);
+app.use(Form);
 
 app.mount("#app");
 app.config.globalProperties.$message = message;

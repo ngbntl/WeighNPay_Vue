@@ -34,7 +34,7 @@
                                     <div class=" truncate text-gray-500">{{users.email}}</div>
                                 </a-menu-item>
                                 <a-menu-item>
-                                    <router-link :to="{name: 'admin-profile'}">
+                                    <router-link :to="profileLink">
                                         <span class="block px-4 py-2 rounded-md hover:bg-gray-200  ">Tài khoản</span>
                                     </router-link>
                                 </a-menu-item>
@@ -71,12 +71,12 @@
                                 <span class="font-medium text-[#333] group-hover:text-white">Đăng nhập</span>
                             </router-link>
                         </button>
-                        <button
+                        <!-- <button
                             class="w-28 h-8 bg-white cursor-pointer rounded-md border-2 border-blue-600 shadow-[inset_0px_-2px_0px_1px_blue-500] group hover:bg-blue-600 transition duration-300 ease-in-out mr-5">
                             <router-link :to="{name:'register'}">
                                 <span class="font-medium text-[#333] group-hover:text-white">Đăng ký</span>
                             </router-link>
-                        </button>
+                        </button> -->
                     </div>
                     <div>
                         <a-drawer v-model:open="open" class="custom-class" root-class-name="root-class-name"
@@ -98,7 +98,7 @@
     </div>
 </template>
 <script>
-import { reactive, ref, watch } from 'vue';
+import { reactive, ref, computed } from 'vue';
 import { useAuthStore } from '../../stores/modules/auth';
 import TheMenu from '../menu/TheMenu.vue';
 
@@ -116,12 +116,13 @@ export default {
         const open = ref(false);
         const check = ref(localStorage.getItem('isLoggedIn') === 'true');
 
-        watch(check, (newVal) => {
-            localStorage.setItem('isLoggedIn', newVal.toString());
+        const role = ref(localStorage.getItem("role"));
+        const profileLink = computed(() => {
+            return role.value === true ? { name: 'admin-profile' } : { name: 'staff-profile' };
         });
-
         const showDrawer = () => {
             open.value = true;
+
         };
 
         const logout = () => {
@@ -139,6 +140,8 @@ export default {
             users,
             logout,
             check,
+            role,
+            profileLink
         };
     },
 };

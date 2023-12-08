@@ -1,24 +1,29 @@
 <template>
-    <table-staff :staff="staff" />
+    <div class="relative text-end m-5">
+        <add-staff />
+    </div>
+    <table-staff :staffs="staffs" />
 </template>
 
 <script>
 import { ref } from 'vue';
 import TableStaff from '../../../components/table/TableStaff.vue';
 import { useAdminStore } from '../../../stores/modules/admin';
+import AddStaff from '../../../components/modal/addStaff.vue';
 export default {
-    components: { TableStaff },
+    components: { TableStaff, AddStaff },
     setup() {
-        const staff = ref([]);
+        const staffs = ref([]);
         const adminStore = useAdminStore();
 
         adminStore.getAllStaff().then((staff) => {
-            staff.value = staff;
+            staffs.value = staff;
+            console.log(staff);
 
 
         });
         return {
-            staff,
+            staffs,
         }
 
 

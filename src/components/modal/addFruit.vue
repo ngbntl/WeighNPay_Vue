@@ -127,7 +127,7 @@ export default {
         const add = () => {
             useFruits.addFruit(formData.value);
             resetForm();
-            window.location.reload();
+
 
 
         };

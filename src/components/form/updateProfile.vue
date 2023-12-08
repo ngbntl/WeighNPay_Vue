@@ -1,86 +1,182 @@
 <template>
-    <div class=" justify-center py-12 sm:px-6 lg:px-8">
-
-        <div class="mt-8 sm:mx-auto sm:w-full sm:max-w-xxl">
-            <div class="bg-white py-8 px-4 sm:rounded-lg sm:px-10  ">
-                <form method="POST" action="#" class="grid grid-cols-3">
-                    <div class="inline-block ">
-                        <label class=" text-sm font-medium text-gray-700" for="name">
-                            Họ tên
-                        </label>
-                        <div class="mt-1">
-                            <input
-                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                required="" autocomplete="name" type="text" name="name" id="name">
-                        </div>
+    <div>
+        <div class="text-center p-3 flex-auto leading-6 pb-20 ">
+            <h2 class="text-2xl font-bold text-left p-2 mx-8 mb-8 text-gray-500">Thông tin tài khoàn</h2>
+            <div class="relative text-end mx-10">
+                <a-button type="primary" @click="update">Lưu</a-button>
+            </div>
+            <div class="grid grid-cols-2 gap-4 text-left mt-3 ml-32 ">
+                <div class="">
+                    <label class="p-2 mb-2 text-md text-gray-500" for="">Họ và tên:</label>
+                    <input type="text" v-model="formData.name" v-bind:class="{
+                'border-red-500 placeholder-red-500': errors.name,
+              }" @input="validateName"
+                        class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
+                        :placeholder="formData.name" />
+                    <div class="text-red-500 absolute -mt-4 pt-3 left-8 text-xs">
+                        {{ errors.name }}
                     </div>
+                </div>
 
-                    <div class="mt-6">
-                        <label class="block text-sm font-medium text-gray-700" for="email">
-                            Email
-                        </label>
-                        <div class="mt-1">
-                            <input
-                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                required="" autocomplete="email" type="email" name="email" id="email">
-                        </div>
+                <div class="">
+                    <label class="p-2 mb-2 text-md text-gray-500" for="">Email:</label>
+
+                    <input type="text" v-model="formData.email" v-bind:class="{
+                ' border-red-500 placeholder-red-500': errors.email, }" @input="validateEmail"
+                        class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
+                        :placeholder="formData.email" />
+                    <div class="text-red-500 absolute -mt-4 ml-3 pt-3 left-1/2 text-xs">
+                        {{ errors.email }}
                     </div>
+                </div>
+                <div class="">
+                    <label class="p-2 mb-2 text-md text-gray-500" for="">Điện thoại:</label>
 
-                    <div class="mt-6">
-                        <label class="block text-sm font-medium text-gray-700" for="confirm-email">
-                            Số điện thoại
-                        </label>
-                        <div class="mt-1">
-                            <input
-                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                required="" autocomplete="phone" type="phone" name="phone" id="phone">
-                        </div>
+                    <input type="text" v-model="formData.phone" v-bind:class="{
+                'border-red-500 placeholder-red-500': errors.phone,
+              }" @input="validatePhone"
+                        class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
+                        :placeholder="formData.phone" />
+                    <div class="text-red-500 absolute -mt-4 pt-3 left-8 text-xs">
+                        {{ errors.phone }}
                     </div>
+                </div>
+                <div class="">
+                    <label class="p-2 mb-2 text-md text-gray-500" for="">Ngày sinh:</label>
 
-
-                    <div class="mt-6">
-                        <label class="block text-sm font-medium text-gray-700" for="dob">
-                            Ngày sinh
-                        </label>
-                        <div class="mt-1">
-                            <input
-                                class="appearance-none block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
-                                required="" type="date" name="birth" id="birth">
-                        </div>
+                    <input type="date" v-model="formData.birth" v-bind:class="{
+                'border-red-500 placeholder-red-500': errors.birth,
+              }" @input="validateBirth"
+                        class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
+                        :placeholder="formData.birth" />
+                    <div class="text-red-500 absolute -mt-4 ml-3 pt-3 left-1/2 text-xs">
+                        {{ errors.birth }}
                     </div>
+                </div>
+                <div>
+                    <label class="p-2 mb-2 text-md text-gray-500" for="">Giới tính:</label>
 
-                    <div class="flex items-center justify-center mt-6">
-                        <span class="mr-3 text-gray-700 font-medium">Giới tính:</span>
-                        <label class="inline-flex items-center">
-                            <input type="radio" class="form-radio h-5 w-5 text-pink-600" name="gender" value="Male">
-                            <span class="ml-2 text-gray-700">Nam</span>
-                        </label>
-                        <label class="inline-flex items-center ml-6">
-                            <input type="radio" class="form-radio h-5 w-5 text-purple-600" name="gender" value="Female">
-                            <span class="ml-2 text-gray-700">Nữ</span>
-                        </label>
+                    <select name="role" v-model="formData.sex" aria-placeholder="Vai trò"
+                        :class="{ 'border-red-500 placeholder-red-500': errors.sex }"
+                        class="relative mb-2 bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500">
+                        <option value="1">Nam</option>
+                        <option value="0">Nữ</option>
+                    </select>
+                    <div class="text-red-500 absolute -mt-4 ml-3 pt-3 left-1/2 text-xs">
+                        {{ errors.sex}}
                     </div>
-
-
-                    <div class="mt-6">
-                        <button
-                            class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                            type="submit">
-                            Lưu
-                        </button>
+                </div>
+                <div class="">
+                    <label class="p-2 mb-2 text-md text-gray-500" for="">Địa chỉ:</label>
+                    <input type="text" v-model="formData.address" v-bind:class="{
+                'border-red-500 placeholder-red-500': errors.address,
+              }" @input="validateAddress"
+                        class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
+                        :placeholder="formData.address" />
+                    <div class="text-red-500 absolute -mt-4 pt-3 left-8 text-xs">
+                        {{ errors.address }}
                     </div>
-                </form>
+                </div>
             </div>
         </div>
+
+
     </div>
 </template>
-
 <script>
+import { ref, onMounted } from 'vue';
+import { useAdminStore } from '../../stores/modules/admin';
+
 export default {
-    name: "update",
-}
+    props: {
+        fruit: {
+            type: Object,
+            required: true,
+        },
+        open: Boolean,
+    },
+    setup(props) {
+        const isModalVisible = ref(false);
+        const formData = ref({
+            name: '',
+            address: '',
+            birth: '',
+            email: '',
+            sex: '',
+            phone: '',
+        });
+        const errors = ref({
+            name: '',
+            address: '',
+            birth: '',
+            email: '',
+            sex: '',
+            phone: '',
+        });
+
+        const useAdmin = useAdminStore();
+
+        onMounted(async () => {
+            const user = await useAdmin.getUser();
+            // Set formData and use user data as placeholders
+            formData.value = {
+                name: user.name || '',
+                address: user.address || '',
+                birth: user.birth || '',
+                email: user.email || '',
+                sex: user.sex,
+                phone: user.phone || '',
+            };
+        });
+
+        const update = () => {
+
+            // Assuming useAdmin has a method named 'updateUser'
+            useAdmin.update(formData.value);
+            console.log('User data updated:', formData.value);
+
+            resetForm();
+            isModalVisible.value = false; // Close the modal
+        };
+
+        const resetForm = () => {
+            formData.value = {
+                name: '',
+                address: '',
+                birth: '',
+                email: '',
+                sex: '',
+                phone: '',
+            };
+            resetErrors();
+        };
+
+        const resetErrors = () => {
+            errors.value = {
+                name: '',
+                address: '',
+                birth: '',
+                email: '',
+                sex: '',
+                phone: '',
+            };
+        };
+
+        const validateName = () => {
+            // Add your validation logic for the name field
+            // Update errors.name if validation fails
+        };
+
+        // Repeat similar validation functions for other fields
+
+        return {
+            isModalVisible,
+            update,
+            formData,
+            errors,
+            validateName,
+            // Add other validation functions to return
+        };
+    },
+};
 </script>
-
-<style>
-
-</style>

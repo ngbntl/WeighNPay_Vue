@@ -20,6 +20,7 @@ export const useFruitStore = defineStore("useFruit", {
       try {
         const response = await fruitServices.addFruit(fruit);
         console.log(response);
+        window.location.reload();
       } catch (error) {
         console.error("Error adding fruit:", error);
 
@@ -40,6 +41,7 @@ export const useFruitStore = defineStore("useFruit", {
       try {
         const response = await fruitServices.deleteFruit(id);
         console.log(response);
+        window.location.reload();
       } catch (error) {
         console.error("Error deleting fruit:", error);
         throw error; // Rethrow the error for handling in calling components
