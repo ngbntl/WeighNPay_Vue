@@ -2,7 +2,13 @@ const staff = [
   {
     path: "/staff",
     component: () => import("../../layouts/staff/index.vue"),
-
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem("role") == "staff") {
+        next();
+      } else {
+        next("/login");
+      }
+    },
     children: [
       {
         path: "fruits",

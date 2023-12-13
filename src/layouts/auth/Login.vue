@@ -1,5 +1,6 @@
 <template>
   <!-- <p class="heading text-center text-xl mt-96">WeighNPay</p> -->
+  <Header />
   <div class="absolute lg:left-1/3 mx-36 mt-48">
 
     <form class="form_main" @submit.prevent="handleSubmit">
@@ -30,64 +31,77 @@
       </div>
     </form>
   </div>
+  <router-view />
 </template>
     
-<script setup>
+<script>
 import { ref } from 'vue';
 import { useAuthStore } from '../../stores/modules/auth';
-const authStore = useAuthStore();
+import Header from '../../components/header/Header.vue';
+export default {
+  components: { Header },
+  setup() {
+    const authStore = useAuthStore();
 
-const formData = ref({
-  email: '',
-  password: ''
-});
-const errors = ref({
-  email: '',
-  password: ''
-});
+    const formData = ref({
+      email: '',
+      password: ''
+    });
+    const errors = ref({
+      email: '',
+      password: ''
+    });
 
 
-// Validate email
-function isValidEmail(email) {
-  return /^[^@]+@\w+(\.\w+)+\w$/.test(email);
-}
-// Validation functions
-function validateEmail() {
-  errors.value.email = '';
-  if (!formData.value.email) {
-    errors.value.email = 'Vui lòng nhập email!';
-  } else if (!isValidEmail(formData.value.email)) {
-    errors.value.email = 'Email không hợp lệ!';
+    // Validate email
+    function isValidEmail(email) {
+      return /^[^@]+@\w+(\.\w+)+\w$/.test(email);
+    }
+    // Validation functions
+    function validateEmail() {
+      errors.value.email = '';
+      if (!formData.value.email) {
+        errors.value.email = 'Vui lòng nhập email!';
+      } else if (!isValidEmail(formData.value.email)) {
+        errors.value.email = 'Email không hợp lệ!';
+      }
+    }
+    function validatePassword() {
+      errors.value.password = '';
+      if (!formData.value.password) {
+        errors.value.password = 'Vui lòng nhập mật khẩu!';
+      } else if (formData.value.password.length < 6) {
+        errors.value.password = 'Mật khẩu phải có ít nhất 6 ký tự!';
+      }
+    }
+    // Submit Handler
+    function handleSubmit() {
+      validateEmail();
+      validatePassword();
+      if (!errors.value.email && !errors.value.password) {
+        login();
+      }
+    }
+    // Login Handler
+    const login = () => {
+      const credentials = {
+        email: formData.value.email,
+        password: formData.value.password,
+      };
+      // Call the store login action here with the credentials
+      authStore.login(credentials);
+
+
+    };
+    return {
+      formData,
+      errors,
+      handleSubmit,
+      login
+
+    }
   }
 }
-function validatePassword() {
-  errors.value.password = '';
-  if (!formData.value.password) {
-    errors.value.password = 'Vui lòng nhập mật khẩu!';
-  } else if (formData.value.password.length < 6) {
-    errors.value.password = 'Mật khẩu phải có ít nhất 6 ký tự!';
-  }
-}
-// Submit Handler
-function handleSubmit() {
-  validateEmail();
-  validatePassword();
-  if (!errors.value.email && !errors.value.password) {
-    login();
-  }
-}
-// Login Handler
-const login = () => {
-  const credentials = {
-    email: formData.value.email,
-    password: formData.value.password,
-  };
-  // Call the store login action here with the credentials
-  authStore.login(credentials);
-
-
-};
-
 
 </script>
 

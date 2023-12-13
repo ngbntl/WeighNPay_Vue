@@ -22,7 +22,8 @@ export default {
         useAdmin.getAllBills().then((bill) => {
             bills.value = bill
             // console.log(bill);
-        })
+        });
+
         return {
             bills,
             useAdmin

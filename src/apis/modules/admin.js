@@ -30,7 +30,7 @@ export default {
     });
   },
   update(user) {
-    return Api().put("update", user, {
+    return Api().post("update", user, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },

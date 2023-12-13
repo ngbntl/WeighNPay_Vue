@@ -1,4 +1,5 @@
 <template>
+    <the-header />
     <div class="w-full mt-3 absolute">
 
         <div class="md:w-1/6 lg:flex xs:hidden xs:w-1/12">
@@ -17,6 +18,7 @@
 </template>
 
 <script>
+import TheHeader from '../../components/header/TheHeader.vue';
 
 import MenuStaff from '../../components/menu/MenuStaff.vue';
 
@@ -25,7 +27,7 @@ import MenuStaff from '../../components/menu/MenuStaff.vue';
 
 export default {
     middleware: 'auth',
-    components: { MenuStaff },
+    components: { MenuStaff, TheHeader },
 
 }
 </script>

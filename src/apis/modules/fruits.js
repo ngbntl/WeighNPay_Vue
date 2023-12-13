@@ -25,5 +25,18 @@ export default {
       },
     });
   },
-  getIdFruit() {},
+  getIdFruit() {
+    return Api().get("getID", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
+  getWeight() {
+    return Api().get("getWeight", {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
 };

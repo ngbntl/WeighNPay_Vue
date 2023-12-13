@@ -2,7 +2,9 @@ import { defineStore } from "pinia";
 import adminServices from "../../apis/modules/admin";
 
 export const useAdminStore = defineStore("useAdmin", {
-  state: () => ({}),
+  state: () => ({
+    cost: null,
+  }),
   actions: {
     async getAllStaff() {
       try {
@@ -34,17 +36,20 @@ export const useAdminStore = defineStore("useAdmin", {
     async addBill(bill) {
       try {
         const response = await adminServices.addBill(bill);
-        console.log(response.data);
-        return response.data;
+
+        const totalPrice = response.data.total_price;
+        return totalPrice;
       } catch (error) {
         console.error("Error Adding Bill", error);
+        // Nếu có lỗi, bạn có thể xử lý nó ở đây hoặc ném lại để bên gọi hàm xử lý
+        throw error;
       }
     },
     async update(user) {
       try {
         const response = await adminServices.update(user);
         console.log(response.data);
-        return response.data;
+        return response.data.total_price;
       } catch (error) {
         console.error("Error updating user", error);
       }

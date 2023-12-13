@@ -3,6 +3,7 @@
         <add-staff />
     </div>
     <table-staff :staffs="staffs" />
+    <router-view />
 </template>
 
 <script>

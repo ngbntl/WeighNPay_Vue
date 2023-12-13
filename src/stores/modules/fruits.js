@@ -3,7 +3,9 @@ import fruitServices from "../../apis/modules/fruits";
 import { useAuthStore } from "./auth";
 
 export const useFruitStore = defineStore("useFruit", {
-  state: () => ({}),
+  state: () => ({
+    fruitstmp: [],
+  }),
 
   actions: {
     async getAllFruits() {
@@ -20,10 +22,9 @@ export const useFruitStore = defineStore("useFruit", {
       try {
         const response = await fruitServices.addFruit(fruit);
         console.log(response);
-        window.location.reload();
+        return response; // return the response for handling in components
       } catch (error) {
         console.error("Error adding fruit:", error);
-
         throw error;
       }
     },
@@ -32,19 +33,43 @@ export const useFruitStore = defineStore("useFruit", {
       try {
         const response = await fruitServices.updateFruit(fruit);
         console.log(response);
+        return response; // return the response for handling in components
       } catch (error) {
         console.error("Error updating fruit:", error);
-        throw error; // Rethrow the error for handling in calling components
+        throw error;
       }
     },
+
     async deleteFruit(id) {
       try {
         const response = await fruitServices.deleteFruit(id);
         console.log(response);
-        window.location.reload();
+        return response; // return the response for handling in components
       } catch (error) {
         console.error("Error deleting fruit:", error);
-        throw error; // Rethrow the error for handling in calling components
+        throw error;
+      }
+    },
+
+    async getIdFruit() {
+      try {
+        const response = await fruitServices.getIdFruit();
+        //console.log(response.data);
+        return response.data;
+      } catch (error) {
+        console.error("Error getting id fruit:", error);
+        throw error;
+      }
+    },
+
+    async getWeight() {
+      try {
+        const response = await fruitServices.getWeight();
+        // console.log(response.data.weight);
+        return response.data.weight;
+      } catch (error) {
+        console.error("Error getting weight:", error);
+        throw error;
       }
     },
   },

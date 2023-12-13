@@ -56,6 +56,7 @@
                             <button @click="addSight" class="p-2 bg-blue-500 text-white rounded-md">
                                 Thêm quả mới
                             </button>
+
                         </div>
                     </div>
                 </div>
@@ -118,6 +119,7 @@ export default {
                 weight: parseFloat(fruit.weight),
             }));
             useAdmin.addBill(resultArray);
+
 
 
 

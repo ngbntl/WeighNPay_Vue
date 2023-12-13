@@ -2,12 +2,24 @@ const admin = [
   {
     path: "/admin",
     component: () => import("../../layouts/admin/admin.vue"),
+    beforeEnter: (to, from, next) => {
+      if (localStorage.getItem("role") == "admin") {
+        next();
+      } else {
+        next("/login");
+      }
+    },
+    meta: {
+      title: "WeightNPay-Admin",
+    },
 
     children: [
       {
         path: "staffs",
         name: "admin-staffs",
+
         component: () => import("../../pages/admin/staffs/index.vue"),
+        meta: { title: "Admin-Staff" },
       },
       {
         path: "fruits",
@@ -18,6 +30,9 @@ const admin = [
         path: "bills",
         name: "admin-bills",
         component: () => import("../../pages/admin/bills/index.vue"),
+        meta: {
+          title: "Hóa đơn | WeighNPay",
+        },
       },
       {
         path: "profile",

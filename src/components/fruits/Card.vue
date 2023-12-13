@@ -3,8 +3,8 @@
         <div class=" bg-white rounded-lg overflow-hidden shadow-lg">
             <img class="flex w-32 h-32 object-cover" :src="fruitProps.image" :alt="fruitProps.name">
             <div class="px-4 py-2">
-                <div class="font-bold text-lg mb-1">{{ fruitProps.name }}</div>
-                <p class="text-gray-700 text-sm">{{fruitProps.description}}</p>
+                <div class="font-bold text-lg ">{{ fruitProps.name }}</div>
+                <p class="text-gray-700 text-sm mb-0">{{fruitProps.description}}</p>
             </div>
             <div class="px-4 pt-2 pb-3">
                 <span class="inline-block bg-gray-200 rounded-full px-2 py-1 text-xs font-semibold text-gray-700 mr-2">Đã

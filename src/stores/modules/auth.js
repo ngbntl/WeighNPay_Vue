@@ -6,6 +6,7 @@ export const useAuthStore = defineStore("auth", {
     role: null,
     isLoggedIn: false,
   }),
+
   actions: {
     async login(credentials) {
       try {
@@ -17,14 +18,14 @@ export const useAuthStore = defineStore("auth", {
         const identity = response.data.identity;
         //console.log(identity);
         if (identity.substring(0, 2) == "AD") {
-          this.role = true;
+          this.role = "admin";
           this.isLoggedIn = true;
           localStorage.setItem("role", this.role);
           localStorage.setItem("isLoggedIn", this.isLoggedIn);
           // console.log(localStorage.getItem("isLoggedIn"));
           router.push("admin/staffs");
-        } else if (identity.subString(0, 2) == "NV") {
-          this.role = false;
+        } else if (identity.substring(0, 2) == "NV") {
+          this.role = "staff";
           this.isLoggedIn = true;
           localStorage.setItem("role", this.role);
           localStorage.setItem("isLoggedIn", this.isLoggedIn);
