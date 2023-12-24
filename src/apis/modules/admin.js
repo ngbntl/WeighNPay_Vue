@@ -43,4 +43,18 @@ export default {
       },
     });
   },
+  activeAcc(ID) {
+    return Api().post("ActiveAcc", ID, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
+  lockAcc(ID) {
+    return Api().post("BanAcc", ID, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
 };

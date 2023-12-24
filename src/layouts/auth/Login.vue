@@ -24,11 +24,11 @@
         <div class="text-red-500 absolute mt-12 pt-3 left-8 text-xs b">{{ errors.password }}</div>
       </div>
       <button id="button" type="submit" class="bg-blue-500 mt-4 active:scale-90 mt-4 px-4 py-2">Đăng nhập</button>
-      <div class="signupContainer">
+      <!-- <div class="signupContainer">
 
         <p>Bạn chưa có tải khoản?</p>
         <a href="/Register">Đăng ký</a>
-      </div>
+      </div> -->
     </form>
   </div>
   <router-view />
@@ -38,6 +38,7 @@
 import { ref } from 'vue';
 import { useAuthStore } from '../../stores/modules/auth';
 import Header from '../../components/header/Header.vue';
+
 export default {
   components: { Header },
   setup() {

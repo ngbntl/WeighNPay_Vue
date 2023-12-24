@@ -48,7 +48,7 @@ import { ref } from 'vue';
 import { useAdminStore } from '../../stores/modules/admin';
 
 export default {
-    name: 'TableFruits',
+    name: 'TableBills',
     props: {
         bills: {
             type: Array,

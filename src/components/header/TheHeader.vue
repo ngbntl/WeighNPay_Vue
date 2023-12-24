@@ -12,9 +12,11 @@
                 <div>
                     <a-dropdown class="left-0" :trigger="['click']">
                         <a class="ant-dropdown-link" @click.prevent>
-                            <img src="https://sm.ign.com/ign_nordic/cover/a/avatar-gen/avatar-generations_prsz.jpg"
-                                id="avatarButton" type="button" data-dropdown-placement="bottom-start"
-                                class="w-10 h-10 rounded-full cursor-pointer" alt="User dropdown">
+                            <a-avatar style="background-color: #217cf3">
+                                <template #icon>
+                                    <UserOutlined />
+                                </template>
+                            </a-avatar>
                         </a>
                         <template #overlay>
                             <a-menu class="relative w-48">
@@ -23,7 +25,7 @@
                                     <div class="truncate text-gray-500">{{ user.email }}</div>
                                 </a-menu-item>
                                 <a-menu-item>
-                                    <router-link :to="{ name: route }">
+                                    <router-link :to="{ name: role === 'admin'?'admin-profile':'staff-profile' }">
                                         <span class="block px-4 py-2 rounded-md hover:bg-gray-200">Tài khoản</span>
                                     </router-link>
                                 </a-menu-item>
@@ -53,13 +55,15 @@
 </template>
 
 <script>
+
+import { UserOutlined } from '@ant-design/icons-vue';
 import { computed, reactive, ref, watch } from 'vue';
 import { useAuthStore } from '../../stores/modules/auth';
 import TheMenu from '../menu/TheMenu.vue';
 import { useAdminStore } from '../../stores/modules/admin';
 
 export default {
-    components: { TheMenu },
+    components: { TheMenu, UserOutlined },
     setup() {
         const user = reactive({
             name: "",
@@ -68,6 +72,8 @@ export default {
         const useAdmin = useAdminStore();
         const authStore = useAuthStore();
         const open = ref(false);
+        const role = ref("");
+        role.value = localStorage.getItem("role");
 
 
 
@@ -95,7 +101,7 @@ export default {
             showDrawer,
             authStore,
             useAdmin,
-
+            role,
             user,
             logout,
 

@@ -44,8 +44,9 @@
                 <div class="">
                     <label for="birthdate" class="p-2 mb-2 text-md text-gray-500">
                         Ngày sinh:
-                        <input id="birthdate" type="date" v-model="formData.birth"
-                            :class="{'border-red-500 placeholder-red-500': errors.birth}" @input="validateBirth"
+                        <input id="birthdate" type="text" v-model="formattedBirthDate"
+                            :class="{'border-red-500 placeholder-red-500': errors.birth}" @input="updateBirth"
+                            placeholder="YYYY-MM-DD"
                             class="relative mb-2 bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500" />
                     </label>
                     <div class="text-red-500 absolute -mt-4 ml-3 pt-3 left-1/2 text-xs">
@@ -146,6 +147,20 @@ export default {
             }
             return '';
         });
+        const updateBirth = () => {
+            // Parse the current value of formData.birth into a Date object
+            const parsedDate = new Date(formattedBirthDate.value);
+
+            // Check if the parsed date is a valid date (not NaN)
+            if (!isNaN(parsedDate.getTime())) {
+                // If the date is valid, update formData.birth with the ISO string representation of the date
+                formData.value.birth = parsedDate.toISOString().split('T')[0];
+
+                // You can also perform validation here if needed
+                // For example, checking if the date is within a certain range or meets specific criteria
+            }
+        };
+
 
         const resetForm = () => {
             formData.value = {
@@ -184,6 +199,7 @@ export default {
             errors,
             formattedBirthDate,
             validateName,
+            updateBirth
             // Add other validation functions to return
         };
     },

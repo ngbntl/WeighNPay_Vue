@@ -17,7 +17,8 @@ import {
   Form,
 } from "ant-design-vue";
 import "./style.css";
-
+import Toast from "vue-toastification";
+import "vue-toastification/dist/index.css";
 import router from "./router/index";
 import axios from "axios";
 window.axios = axios;
@@ -44,6 +45,6 @@ app.use(Button);
 app.use(ConfigProvider);
 app.use(Avatar);
 app.use(Form);
-
+app.use(Toast);
 app.mount("#app");
 app.config.globalProperties.$message = message;

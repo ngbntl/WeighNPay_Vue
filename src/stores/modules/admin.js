@@ -1,5 +1,7 @@
 import { defineStore } from "pinia";
 import adminServices from "../../apis/modules/admin";
+import { useToast } from "vue-toastification";
+import { message } from "ant-design-vue";
 
 export const useAdminStore = defineStore("useAdmin", {
   state: () => ({
@@ -27,10 +29,19 @@ export const useAdminStore = defineStore("useAdmin", {
     async addStaff(staff) {
       try {
         const response = await adminServices.addStaff(staff);
+        const mess = response.data.message;
+        if (mess == "User already exists. Please add a different one.") {
+          useToast().warning("Người dùng đã tồn tại");
+        } else {
+          useToast().success("Thêm thành công");
+        }
+
         console.log(response.data);
-        return response.data;
+
+        return this.getAllStaff();
       } catch (error) {
         console.error("Error adding staff", error);
+        useToast().error("Thêm thất bại");
       }
     },
     async addBill(bill) {
@@ -41,7 +52,7 @@ export const useAdminStore = defineStore("useAdmin", {
         return totalPrice;
       } catch (error) {
         console.error("Error Adding Bill", error);
-        // Nếu có lỗi, bạn có thể xử lý nó ở đây hoặc ném lại để bên gọi hàm xử lý
+        useToast().error("Thêm thành công");
         throw error;
       }
     },
@@ -49,9 +60,13 @@ export const useAdminStore = defineStore("useAdmin", {
       try {
         const response = await adminServices.update(user);
         console.log(response.data);
+
+        window.location.reload();
+        useToast().success("Cập nhật thông tin thành công!");
         return response.data.total_price;
       } catch (error) {
         console.error("Error updating user", error);
+        useToast().error("Có lỗi xảy ra! Vui lòng thử lại");
       }
     },
     async getUser() {
@@ -61,6 +76,27 @@ export const useAdminStore = defineStore("useAdmin", {
         return response.data;
       } catch (error) {
         console.error("Error getting user", error);
+      }
+    },
+    async activeAcc(ID) {
+      try {
+        const response = await adminServices.activeAcc(ID);
+        console.log(response);
+        useToast.success("ok");
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async lockAcc(ID) {
+      try {
+        const res = await adminServices.lockAcc(ID);
+        if (!res.data.status) {
+          useToast.warning("Tài khoản đang bị khóa");
+        } else {
+          useToast.success("Đã khóa tài khoản");
+        }
+      } catch (err) {
+        console.log(err);
       }
     },
   },

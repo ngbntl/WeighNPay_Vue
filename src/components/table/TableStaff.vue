@@ -27,12 +27,10 @@
                                 <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
                                     Địa chi
                                 </th>
-                                <!-- <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
-                                    Sửa
-                                </th>
                                 <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
-                                    Xóa
-                                </th> -->
+                                    Thao tác
+                                </th>
+
 
                             </tr>
                         </thead>
@@ -59,12 +57,17 @@
                                 <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                                     {{ staff.address }}
                                 </td>
-                                <!-- <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
-                                    <a class="text-green-500 hover:text-green-700" href="#">
-                                        Edit
+
+                                <td class="px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
+                                    <a class="text-green-500 hover:text-green-700" href="#" v-if="!staff.valid"
+                                        @click="activeAcc(staff.ID)">
+                                        Mở khóa
+                                    </a>
+                                    <a class="text-red-500 hover:text-red-700" href="#" v-else>
+                                        Khóa
                                     </a>
                                 </td>
-                                <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
+                                <!-- <td class="px-6 py-4 text-sm font-medium text-right whitespace-nowrap">
                                     <a class="text-red-500 hover:text-red-700" href="#">
                                         Delete
                                     </a>
@@ -80,6 +83,8 @@
     </div>
 </template>
 <script>
+import { useAdminStore } from '../../stores/modules/admin';
+
 export default {
     name: "TableStaff",
     props: {
@@ -100,9 +105,12 @@ export default {
                 return date.toLocaleDateString('en-US', options);
             } catch (error) {
                 console.error('Error formatting date:', error);
-                return 'Error';
+                return ' ';
             }
         },
+        activeAcc(ID) {
+            const useAdmin = useAdminStore.activeAcc(ID);
+        }
 
     },
 }

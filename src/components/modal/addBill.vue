@@ -102,7 +102,7 @@ export default {
 
             if (selectedOption) {
                 const newFruit = {
-                    id: undefined,
+                    ID: undefined,
                     weight: undefined,
                     selectedOption: selectedOption,
                 };
@@ -115,7 +115,7 @@ export default {
         const useAdmin = useAdminStore();
         const saveValues = () => {
             const resultArray = dynamicValidateForm.value.fruits.map((fruit) => ({
-                id: fruit.selectedOption.ID,
+                ID: fruit.selectedOption.ID,
                 weight: parseFloat(fruit.weight),
             }));
             useAdmin.addBill(resultArray);
