@@ -10,8 +10,8 @@
             <div class="grid grid-cols-2 gap-4 text-left mt-3 ml-32">
                 <div class="">
                     <label class="p-2 mb-2 text-md text-gray-500" for="">Họ và tên:</label>
-                    <input type="text" v-model="formData.name" :class="{'border-red-500 placeholder-red-500': errors.name}"
-                        @input="validateName"
+                    <input type="text" v-model="formData.name"
+                        :class="{ 'border-red-500 placeholder-red-500': errors.name }" @input="validateName"
                         class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
                         :placeholder="formData.name" />
                     <div class="text-red-500 absolute -mt-4 pt-3 left-8 text-xs">
@@ -23,7 +23,7 @@
                     <label class="p-2 mb-2 text-md text-gray-500" for="">Email:</label>
 
                     <input type="text" v-model="formData.email"
-                        :class="{'border-red-500 placeholder-red-500': errors.email}" @input="validateEmail"
+                        :class="{ 'border-red-500 placeholder-red-500': errors.email }" @input="validateEmail"
                         class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
                         :placeholder="formData.email" />
                     <div class="text-red-500 absolute -mt-4 ml-3 pt-3 left-1/2 text-xs">
@@ -34,30 +34,31 @@
                     <label class="p-2 mb-2 text-md text-gray-500" for="">Điện thoại:</label>
 
                     <input type="text" v-model="formData.phone"
-                        :class="{'border-red-500 placeholder-red-500': errors.phone}" @input="validatePhone"
+                        :class="{ 'border-red-500 placeholder-red-500': errors.phone }" @input="validatePhone"
                         class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
                         :placeholder="formData.phone" />
                     <div class="text-red-500 absolute -mt-4 pt-3 left-8 text-xs">
                         {{ errors.phone }}
                     </div>
                 </div>
-                <div class="">
+                <div>
                     <label for="birthdate" class="p-2 mb-2 text-md text-gray-500">
                         Ngày sinh:
-                        <input id="birthdate" type="text" v-model="formattedBirthDate"
-                            :class="{'border-red-500 placeholder-red-500': errors.birth}" @input="updateBirth"
-                            placeholder="YYYY-MM-DD"
-                            class="relative mb-2 bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500" />
+                        <input id="birthdate" type="date" v-model="formData.birth"
+                            :class="{ 'border-red-500 placeholder-red-500': errors.birth }"
+                            class="relative mb-2 bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500" />
                     </label>
                     <div class="text-red-500 absolute -mt-4 ml-3 pt-3 left-1/2 text-xs">
                         {{ errors.birth }}
                     </div>
                 </div>
+
+
                 <div>
                     <label class="p-2 mb-2 text-md text-gray-500" for="">Giới tính:</label>
 
                     <select name="role" v-model="formData.sex" aria-placeholder="Vai trò"
-                        :class="{'border-red-500 placeholder-red-500': errors.sex}"
+                        :class="{ 'border-red-500 placeholder-red-500': errors.sex }"
                         class="relative mb-2 bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500">
                         <option value="1">Nam</option>
                         <option value="0">Nữ</option>
@@ -69,7 +70,7 @@
                 <div class="">
                     <label class="p-2 mb-2 text-md text-gray-500" for="">Địa chỉ:</label>
                     <input type="text" v-model="formData.address"
-                        :class="{'border-red-500 placeholder-red-500': errors.address}" @input="validateAddress"
+                        :class="{ 'border-red-500 placeholder-red-500': errors.address }" @input="validateAddress"
                         class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
                         :placeholder="formData.address" />
                     <div class="text-red-500 absolute -mt-4 pt-3 left-8 text-xs">
@@ -80,129 +81,136 @@
         </div>
     </div>
 </template>
-  
+
 <script>
-import { ref, onMounted, computed } from 'vue';
-import { useAdminStore } from '../../stores/modules/admin';
+import { ref, onMounted, computed } from "vue";
+
+import { useAdminStore } from "../../stores/modules/admin";
 
 export default {
-    props: {
-        fruit: {
-            type: Object,
-            required: true,
-        },
-        open: Boolean,
-    },
     setup() {
-        const isModalVisible = ref(false);
         const formData = ref({
-            name: '',
-            address: '',
-            birth: '',
-            email: '',
-            sex: '',
-            phone: '',
+            name: "",
+            address: "",
+            birth: "",
+            email: "",
+            sex: "",
+            phone: "",
         });
+
         const errors = ref({
-            name: '',
-            address: '',
-            birth: '',
-            email: '',
-            sex: '',
-            phone: '',
+            name: "",
+            address: "",
+            birth: "",
+            email: "",
+            sex: "",
+            phone: "",
         });
 
         const useAdmin = useAdminStore();
-
         onMounted(async () => {
+
             const user = await useAdmin.getUser();
-            // Set formData and use user data as placeholders
-            formData.value = {
-                name: user.name || '',
-                address: user.address || '',
-                birth: user.birth || '',
-                email: user.email || '',
-                sex: user.sex,
-                phone: user.phone || '',
-            };
+
+            formData.value = { ...user };
+
+            if (formData.value.birth) {
+
+                const birthDate = new Date(formData.value.birth);
+
+                formData.value.birth = birthDate.toISOString().split('T')[0];
+
+            }
+
         });
+
 
         const update = () => {
-            // Assuming useAdmin has a method named 'updateUser'
             useAdmin.update(formData.value);
-            console.log('User data updated:', formData.value);
-
-            resetForm();
-            isModalVisible.value = false; // Close the modal
+            console.log("User data updated:", formData.value);
         };
 
-        const formattedBirthDate = computed(() => {
-            if (formData.value.birth) {
+        const formattedBirthDate = computed({
+
+            // Getter tra về ngày theo định dạng hiển thị
+
+            get: () => {
+
+                if (!formData.value.birth) return "";
+
                 const birthDate = new Date(formData.value.birth);
-                return birthDate.toLocaleDateString('en-US', {
+
+                return birthDate.toLocaleDateString('en-CA', { // Định dạng YYYY-MM-DD
+
                     year: 'numeric',
+
                     month: '2-digit',
+
                     day: '2-digit',
+
                 });
-            }
-            return '';
+
+            },
+
+            // Setter cập nhật giá trị vào formData dựa trên input của người dùng
+
+            set: (newValue) => {
+
+                if (newValue) {
+
+                    const [year, month, day] = newValue.split('-').map(Number);
+
+                    const newBirthDate = new Date(Date.UTC(year, month - 1, day));
+
+                    formData.value.birth = newBirthDate.toISOString().split('T')[0];
+
+                    errors.value.birth = ''; // Nếu không có lỗi
+
+                } else {
+
+                    errors.value.birth = 'Invalid date format';
+
+                }
+
+            },
+
         });
-        const updateBirth = () => {
-            // Parse the current value of formData.birth into a Date object
-            const parsedDate = new Date(formattedBirthDate.value);
 
-            // Check if the parsed date is a valid date (not NaN)
-            if (!isNaN(parsedDate.getTime())) {
-                // If the date is valid, update formData.birth with the ISO string representation of the date
-                formData.value.birth = parsedDate.toISOString().split('T')[0];
-
-                // You can also perform validation here if needed
-                // For example, checking if the date is within a certain range or meets specific criteria
-            }
-        };
-
-
-        const resetForm = () => {
-            formData.value = {
-                name: '',
-                address: '',
-                birth: '',
-                email: '',
-                sex: '',
-                phone: '',
-            };
-            resetErrors();
-        };
-
-        const resetErrors = () => {
-            errors.value = {
-                name: '',
-                address: '',
-                birth: '',
-                email: '',
-                sex: '',
-                phone: '',
-            };
-        };
+        // Placeholder for your validation functions
 
         const validateName = () => {
-            // Add your validation logic for the name field
-            // Update errors.name if validation fails
+            /* ... */
         };
 
-        // Repeat similar validation functions for other fields
+        const validateEmail = () => {
+            /* ... */
+        };
+
+        const validatePhone = () => {
+            /* ... */
+        };
+
+        const validateAddress = () => {
+            /* ... */
+        };
 
         return {
-            isModalVisible,
             update,
+
             formData,
+
             errors,
+
             formattedBirthDate,
+
             validateName,
-            updateBirth
-            // Add other validation functions to return
+
+            validateEmail,
+
+            validatePhone,
+
+            validateAddress,
         };
     },
 };
 </script>
-  

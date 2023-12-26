@@ -12,10 +12,13 @@ export const useAuthStore = defineStore("auth", {
     async login(credentials) {
       try {
         const response = await AuthServices.login(credentials);
-        if (response.data.message == "Không tìm thấy email") {
-          useToast().error(response.data.message);
+        const message = response.data.message;
+        if (message == "Cannot find email") {
+          useToast().warning("Không tìm thấy email");
+        } else if (message == "Wrong Password") {
+          useToast().error("Sai mật khẩu");
         } else {
-          useToast().success(response.data.message);
+          useToast().success("Đăng nhập thành công");
         }
         console.log("API Response:", response.data.message);
 
@@ -41,7 +44,7 @@ export const useAuthStore = defineStore("auth", {
         if (this.role === "admin") {
           router.push("admin/staffs");
         } else if (this.role === "staff") {
-          router.push("staff");
+          router.push("staff/bills");
         }
       } catch (error) {
         // Error handling logic

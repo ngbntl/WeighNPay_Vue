@@ -15,6 +15,7 @@ import {
   ConfigProvider,
   Avatar,
   Form,
+  Carousel,
 } from "ant-design-vue";
 import "./style.css";
 import Toast from "vue-toastification";
@@ -32,6 +33,8 @@ app.use(router);
 
 const [modal, contextHolder] = Modal.useModal();
 
+app.provide("contextHolder", contextHolder);
+app.use(Carousel);
 app.use(Drawer);
 app.use(List);
 app.use(Menu);
@@ -45,6 +48,7 @@ app.use(Button);
 app.use(ConfigProvider);
 app.use(Avatar);
 app.use(Form);
+
 app.use(Toast);
 app.mount("#app");
 app.config.globalProperties.$message = message;

@@ -39,4 +39,7 @@ export default {
       },
     });
   },
+  getImage(img) {
+    return Api().post("getImage", img);
+  },
 };

@@ -58,12 +58,12 @@
                                     {{ staff.address }}
                                 </td>
 
-                                <td class="px-6 py-4 text-sm font-medium text-center whitespace-nowrap">
+                                <td class="px-6 py-4 text-sm font-medium text-left whitespace-nowrap">
                                     <a class="text-green-500 hover:text-green-700" href="#" v-if="!staff.valid"
                                         @click="activeAcc(staff.ID)">
                                         Mở khóa
                                     </a>
-                                    <a class="text-red-500 hover:text-red-700" href="#" v-else>
+                                    <a class="text-red-500 hover:text-red-700" href="#" v-else @click="lockAcc(staff.ID)">
                                         Khóa
                                     </a>
                                 </td>
@@ -83,6 +83,7 @@
     </div>
 </template>
 <script>
+import { useToast } from 'vue-toastification';
 import { useAdminStore } from '../../stores/modules/admin';
 
 export default {
@@ -93,9 +94,8 @@ export default {
             required: true,
         }
     },
-
-    methods: {
-        formatDate(value) {
+    setup(props) {
+        const formatDate = (value) => {
             try {
                 const date = new Date(value.replace('GMT', ''));
                 if (isNaN(date)) {
@@ -107,11 +107,29 @@ export default {
                 console.error('Error formatting date:', error);
                 return ' ';
             }
-        },
-        activeAcc(ID) {
-            const useAdmin = useAdminStore.activeAcc(ID);
-        }
+        };
+        const useAdmin = useAdminStore();
+        const activeAcc = (ID) => {
+            useAdmin.activeAcc(ID);
+            window.location.reload();
 
-    },
+            useToast.success("Mở khóa thành công");
+
+        };
+        const lockAcc = async (ID) => {
+
+            await useAdmin.lockAcc(ID);
+            window.location.reload();
+            useToast.success("Khóa thành công")
+        };
+
+
+        return {
+            formatDate,
+            activeAcc,
+            lockAcc
+        };
+    }
 }
 </script>
+

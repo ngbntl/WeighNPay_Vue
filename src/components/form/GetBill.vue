@@ -38,7 +38,7 @@
                         </button>
                         <button @click="getId(index)"
                             class="mr-2 cursor-pointer transition-all bg-blue-500 text-white px-6 py-2 rounded-lg border-blue-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
-                            Nhận diện
+                            <GetImage :image_path="image" />
                         </button>
                         <button @click="removeSight(index)" class="inline">
                             <MinusCircleOutlined />
@@ -67,9 +67,10 @@ import { MinusCircleOutlined } from "@ant-design/icons-vue";
 import { ref } from "vue";
 import { useFruitStore } from "../../stores/modules/fruits";
 import { useAdminStore } from "../../stores/modules/admin";
-
+import GetImage from '../modal/GetImage.vue';
+import { baseURL } from "../../apis";
 export default {
-    components: { MinusCircleOutlined },
+    components: { MinusCircleOutlined, GetImage },
     setup() {
         const useFruit = useFruitStore();
         const dynamicValidateForm = ref({
@@ -93,9 +94,9 @@ export default {
 
                 dynamicValidateForm.value.fruits.push(newFruit);
 
-                // Retrieve data from the API and update the newly added fruit
-                getWeight(selectedOption);
-                getId(selectedOption);
+                // // Retrieve data from the API and update the newly added fruit
+                // getWeight(selectedOption);
+                // getId(selectedOption);
             } else {
                 console.warn("Please select a fruit before adding.");
             }
@@ -108,15 +109,16 @@ export default {
                 console.log(weight);
             });
         };
-
+        const image = ref("");
         const getId = (index) => {
             useFruit.getIdFruit().then(fruit => {
                 // Update the ID, name, and price properties for the specific row
-                dynamicValidateForm.value.fruits[index].ID = fruit.ID;
-                dynamicValidateForm.value.fruits[index].name = fruit.name;
-                dynamicValidateForm.value.fruits[index].price = fruit.price;
-                console.log(fruit);
+                dynamicValidateForm.value.fruits[index].ID = fruit.result.ID;
+                dynamicValidateForm.value.fruits[index].name = fruit.result.name;
+                dynamicValidateForm.value.fruits[index].price = fruit.result.price;
+                image.value = `${baseURL}/image/${fruit.image_path}`;
             });
+
         };
 
         const removeSight = (index) => {
@@ -156,6 +158,7 @@ export default {
         return {
             dynamicValidateForm,
             cost,
+            image,
             addSight,
             getWeight,
             getId,

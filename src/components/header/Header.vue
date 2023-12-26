@@ -2,13 +2,13 @@
     <div class="relative bg-white h-12">
 
         <div
-            class="relative font-bold text-2xl text-purple-800 justify-center pt-1 lg:text-left lg:ml-36 xs:text-center xs:-mt-9 lg:mt-0 z-0">
+            class="relative font-bold text-2xl text-purple-800 justify-center pt-1 lg:text-left lg:ml-40 xs:text-center xs:-mt-9 lg:mt-0 z-0">
             <a href="/"> <span>WeighNPay</span></a>
         </div>
         <div>
             <div class="absolute lg:mr-36 top-1 xs:right-5 xs:mr-0">
                 <div>
-                    <div class="btn absolute right-32 top-0 mt-1 xs:hidden lg:flex">
+                    <div class="btn absolute right-0 top-0 mt-1 xs:hidden lg:flex">
                         <button
                             class="w-28 h-8 bg-white cursor-pointer rounded-md border-2 border-blue-600 shadow-[inset_0px_-2px_0px_1px_blue-500] group hover:bg-blue-600 transition duration-300 ease-in-out mr-5">
                             <router-link :to="{ name:'login' }">

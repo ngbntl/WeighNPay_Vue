@@ -4,14 +4,14 @@
             <!-- SVG code -->
         </div>
         <div
-            class="relative font-bold text-2xl text-purple-800 justify-center pt-1 lg:text-left lg:ml-36 xs:text-center xs:-mt-9 lg:mt-0 z-0">
+            class="relative font-bold text-2xl text-purple-800 justify-center pt-1 lg:text-left lg:ml-24 xs:text-center xs:-mt-9 lg:mt-0 z-0">
             <a href="/"> <span>WeighNPay</span></a>
         </div>
         <div>
             <div class="absolute lg:mr-36 top-1 xs:right-5 xs:mr-0">
                 <div>
                     <a-dropdown class="left-0" :trigger="['click']">
-                        <a class="ant-dropdown-link" @click.prevent>
+                        <a class="ant-dropdown-link hover:cursor-pointer" @click.prevent>
                             <a-avatar style="background-color: #217cf3">
                                 <template #icon>
                                     <UserOutlined />
@@ -26,13 +26,18 @@
                                 </a-menu-item>
                                 <a-menu-item>
                                     <router-link :to="{ name: role === 'admin'?'admin-profile':'staff-profile' }">
-                                        <span class="block px-4 py-2 rounded-md hover:bg-gray-200">Tài khoản</span>
+                                        <span class="block px-4 py-1 rounded-md hover:bg-gray-200">Tài khoản</span>
                                     </router-link>
                                 </a-menu-item>
+                                <!-- <a-menu-item>
+                                    <router-link :to="{ name:'chagePass'}">
+                                        <span class="block px-4 py-1 rounded-md hover:bg-gray-200">Đổi mật khẩu</span>
+                                    </router-link>
+                                </a-menu-item> -->
 
                                 <a-menu-item>
                                     <span @click="logout"
-                                        class="block px-4 py-2 text-sm text-gray-500 rounded-md hover:bg-gray-200">Đăng
+                                        class="block px-4 py-1 text-sm text-gray-500 rounded-md hover:bg-gray-200">Đăng
                                         xuất</span>
                                 </a-menu-item>
                             </a-menu>

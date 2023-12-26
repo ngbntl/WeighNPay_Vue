@@ -72,5 +72,19 @@ export const useFruitStore = defineStore("useFruit", {
         throw error;
       }
     },
+    async getImage(img) {
+      try {
+        const response = await fruitServices.getImage(img);
+        let blob = new Blob([response.data], { type: "image" });
+        const src = URL.createObjectURL(blob);
+
+        localStorage.setItem("img", src);
+        //console.log(localStorage.getItem("img"));
+        return src;
+      } catch (error) {
+        console.log("Error al obtener la imagen");
+        throw error;
+      }
+    },
   },
 });

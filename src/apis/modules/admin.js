@@ -30,7 +30,7 @@ export default {
     });
   },
   update(user) {
-    return Api().post("update", user, {
+    return Api().put("update", user, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
@@ -44,14 +44,14 @@ export default {
     });
   },
   activeAcc(ID) {
-    return Api().post("ActiveAcc", ID, {
+    return Api().put(`ActiveAcc/${ID}`, ID, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
   },
   lockAcc(ID) {
-    return Api().post("BanAcc", ID, {
+    return Api().put(`BanAcc/${ID}`, ID, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
