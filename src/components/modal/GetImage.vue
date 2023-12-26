@@ -4,8 +4,17 @@
         <a-modal v-model:open="open">
             <div class="text-center p-3 flex-auto leading-6">
                 <h2 class="text-2xl font-bold py-4 text-gray-500">Kết quả nhận diện</h2>
-                <img :src="image_path" alt="">
+                <img :src="image_path" alt="" class="w-full h-full">
             </div>
+            <template #footer>
+
+                <a-button type="primary" @click="handleOk">
+
+                    Đóng
+
+                </a-button>
+
+            </template>
         </a-modal>
     </div>
 </template>
@@ -26,10 +35,6 @@ export default {
 
         }
             ;
-
-        onMounted(async () => {
-            console.log(img)
-        })
 
 
         const handleOk = (e) => {

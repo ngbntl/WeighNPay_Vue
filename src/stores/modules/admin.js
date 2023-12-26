@@ -47,8 +47,8 @@ export const useAdminStore = defineStore("useAdmin", {
     async addBill(bill) {
       try {
         const response = await adminServices.addBill(bill);
-
         const totalPrice = response.data.total_price;
+        useToast().success("Thêm thành công");
         return totalPrice;
       } catch (error) {
         console.error("Error Adding Bill", error);
@@ -81,7 +81,7 @@ export const useAdminStore = defineStore("useAdmin", {
       try {
         const response = await adminServices.activeAcc(ID);
         if (response.message == "Account activated") {
-          useToast.success("đã mở khóa");
+          useToast().success("đã mở khóa");
         }
       } catch (error) {
         console.log(error);
@@ -91,7 +91,7 @@ export const useAdminStore = defineStore("useAdmin", {
       try {
         const res = await adminServices.lockAcc(ID);
         if (res.message == "Account banned") {
-          useToast.success("Đã khóa tài khoản");
+          useToast().success("Đã khóa tài khoản");
         }
       } catch (err) {
         console.log(err);

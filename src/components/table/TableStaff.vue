@@ -111,8 +111,10 @@ export default {
         const useAdmin = useAdminStore();
         const activeAcc = (ID) => {
             useAdmin.activeAcc(ID);
-            window.location.reload();
 
+
+
+            window.location.reload();
             useToast.success("Mở khóa thành công");
 
         };

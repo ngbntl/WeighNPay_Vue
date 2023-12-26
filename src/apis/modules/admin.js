@@ -57,4 +57,11 @@ export default {
       },
     });
   },
+  getBill(ID) {
+    return Api().get(`ViewBill/${ID}`, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    });
+  },
 };

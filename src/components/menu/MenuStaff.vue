@@ -17,14 +17,14 @@
                     </span>
                 </router-link>
             </a-menu-item>
-            <!-- <a-menu-item key="staff-createBills">
+            <a-menu-item key="staff-createBills">
                 <router-link :to="{name: 'staff-createBills'}">
                     <span>
                         <ProfileOutlined class="relative -top-1 mr-2" /> Tạo đơn
                     </span>
                 </router-link>
 
-            </a-menu-item> -->
+            </a-menu-item>
             <div class="lg:hidden mt-10">
                 <a-menu>
                     <a-menu-item key="staff-fruits">

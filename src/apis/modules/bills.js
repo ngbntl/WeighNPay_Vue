@@ -14,4 +14,7 @@ export default {
   updateFruit(fruit) {
     return Api().put(`updateFruit/${fruit.ID}`, fruit);
   },
+  getBill(ID) {
+    return Api().get(`ViewBill/${ID}`);
+  },
 };

@@ -21,17 +21,18 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            <tr v-for="(bill, index) in bills" :key="index" class="text-left">
+                            <tr v-for="(bill, index) in bills" :key="index"
+                                class="text-left hover:cursor-pointer hover:text-blue-500" @click="showModal(bill.bill_id)">
                                 <td class="px-3 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
                                     {{ bill.bill_id }}
                                 </td>
-                                <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                                <td class="px-6 py-4 text-sm  whitespace-nowrap">
                                     {{ formatDate(bill.Date) }}
                                 </td>
-                                <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                                <td class="px-6 py-4 text-sm  whitespace-nowrap">
                                     {{ bill.user_id }}
                                 </td>
-                                <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
+                                <td class="px-6 py-4 text-sm  whitespace-nowrap">
                                     {{ bill.total_cost }}
                                 </td>
                             </tr>
@@ -39,6 +40,49 @@
                     </table>
                 </div>
             </div>
+            <a-modal v-model:open="open">
+                <div class="text-center p-3 flex-auto leading-6">
+                    <h2 class="text-2xl font-bold py-4 text-gray-500">Chi tiết đơn hàng</h2>
+                    <table class="border border-gray-700 mt-5 w-full">
+                        <thead class="border border-gray-700 text-gray-500">
+                            <tr>
+                                <th scope="col" class="px-4 py-3 ">STT</th>
+                                <th scope="col" class="px-4 py-3">Mặt hàng</th>
+                                <th scope="col" class="px-4 py-3">Khối lượng</th>
+                                <th scope="col" class="px-4 py-3">Đơn giá</th>
+                                <th scope="col" class="px-4 py-3">Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody v-if="selectedBill.bill">
+                            <tr class="border border-gray-700" v-for="(fruit, index) in selectedBill.bill" :key="index">
+                                <td class="px-5 py-3">{{ index + 1 }}</td>
+                                <td class="px-5 py-3">{{ fruit.name }}</td>
+                                <td class="px-5 py-3">{{ fruit.weight }}</td>
+                                <td class="px-5 py-3">{{ fruit.price }}</td>
+                                <td class="px-5 py-3">{{ fruit.price * fruit.weight }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="text-left mt-2 font-bold text-gray-500">
+
+                        <span v-if="selectedBill.total_price">Tổng giá trị hóa đơn: {{ selectedBill.total_price }}
+                            vnd</span>
+
+
+
+                    </div>
+                </div>
+                <template #footer>
+
+                    <a-button type="primary" @click="handleOk">
+
+                        Đóng
+
+                    </a-button>
+
+                </template>
+            </a-modal>
         </div>
     </div>
 </template>
@@ -46,7 +90,7 @@
 <script>
 import { ref } from 'vue';
 import { useAdminStore } from '../../stores/modules/admin';
-
+import { useFruitStore } from '../../stores/modules/fruits';
 export default {
     name: 'TableBills',
     props: {
@@ -56,13 +100,34 @@ export default {
         },
     },
     setup() {
-        const useAdmin = useAdminStore();
+        const fruitStore = useFruitStore();
+        const adminStore = useAdminStore();
+        const open = ref(false);
+        const selectedBill = ref({
 
-        const openEditModal = (bill) => {
-            console.log(bill);
-            // Open your modal here
+            bill: [],
+
+            total_price: 0
+
+        });
+
+        const showModal = async (billID) => {
+            open.value = true;
+            const billData = await fruitStore.getBill(billID);
+
+            if (billData && billData.bill && billData.total_price !== undefined) {
+                selectedBill.value = {
+                    bill: billData.bill,
+                    total_price: billData.total_price
+                };
+            } else {
+                console.error('Error: Bill data structure is not as expected', billData);
+
+            }
+        }
+        const handleOk = () => {
+            open.value = false;
         };
-
         const formatDate = (value) => {
             try {
                 const date = new Date(value.replace('GMT', ''));
@@ -78,7 +143,11 @@ export default {
         };
 
         return {
-            openEditModal,
+            open,
+            selectedBill,
+
+            showModal,
+            handleOk,
             formatDate,
         };
     },

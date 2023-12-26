@@ -7,8 +7,8 @@
                     <span class="mb-2 mr-4 text-md font-bold uppercase text-gray-500 text-left">STT</span>
                     <span class="pl-7 pr-16 mb-2 mr-4 ml-text-md font-bold uppercase text-gray-500 text-left">Loại
                         quả</span>
-                    <span class="pr-2 mb-2 mr-16 ml-text-md font-bold uppercase text-gray-500 text-left">Giá</span>
-                    <span class="px-10 mb-2 text-md font-bold uppercase text-gray-500 text-left">Khối lượng</span>
+                    <span class="pr-2 mb-2 mr-14 ml-text-md font-bold uppercase text-gray-500 text-left">Giá</span>
+                    <span class="px-8 mb-2 text-md font-bold uppercase text-gray-500 text-left">Khối lượng</span>
                 </div>
                 <div v-for="(sight, index) in dynamicValidateForm.fruits" :key="index" class="relative text-center">
                     <div class="flex text-center ml-60 mb-4 items-baseline">
@@ -93,10 +93,6 @@ export default {
                 };
 
                 dynamicValidateForm.value.fruits.push(newFruit);
-
-                // // Retrieve data from the API and update the newly added fruit
-                // getWeight(selectedOption);
-                // getId(selectedOption);
             } else {
                 console.warn("Please select a fruit before adding.");
             }
@@ -136,18 +132,13 @@ export default {
             try {
                 const totalPrice = await useAdmin.addBill(setBill);
                 console.log("Total Price:", totalPrice);
-
-                // Hiển thị giá trị total_price lên giao diện
                 displayTotalPrice(totalPrice);
             } catch (error) {
                 console.error("Error Adding Bill", error);
-                // Xử lý lỗi nếu cần thiết
             }
         };
 
         const displayTotalPrice = (totalPrice) => {
-            // Điều này phụ thuộc vào cách bạn muốn hiển thị giá trị trên giao diện.
-            // Dưới đây là một ví dụ đơn giản, bạn có thể điều chỉnh cho phù hợp với ứng dụng của bạn.
             const totalPriceElement = document.getElementById("total-price");
             if (totalPriceElement) {
                 totalPriceElement.innerText = `Thành tiền: ${totalPrice}`;

@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import fruitServices from "../../apis/modules/fruits";
 import { useAuthStore } from "./auth";
-
+import adminServices from "../../apis/modules/admin";
 export const useFruitStore = defineStore("useFruit", {
   state: () => ({
     fruitstmp: [],
@@ -21,6 +21,7 @@ export const useFruitStore = defineStore("useFruit", {
     async addFruit(fruit) {
       try {
         const response = await fruitServices.addFruit(fruit);
+        useToast().success("Thêm thành công");
         console.log(response);
         return response; // return the response for handling in components
       } catch (error) {
@@ -32,7 +33,8 @@ export const useFruitStore = defineStore("useFruit", {
     async updateFruit(fruit) {
       try {
         const response = await fruitServices.updateFruit(fruit);
-        console.log(response);
+
+        useToast().success("Cập nhật thành công");
         return response; // return the response for handling in components
       } catch (error) {
         console.error("Error updating fruit:", error);
@@ -44,6 +46,7 @@ export const useFruitStore = defineStore("useFruit", {
       try {
         const response = await fruitServices.deleteFruit(id);
         console.log(response);
+        useToast().success("Xóa thành công");
         return response; // return the response for handling in components
       } catch (error) {
         console.error("Error deleting fruit:", error);
@@ -84,6 +87,14 @@ export const useFruitStore = defineStore("useFruit", {
       } catch (error) {
         console.log("Error al obtener la imagen");
         throw error;
+      }
+    },
+    async getBill(ID) {
+      try {
+        const res = await adminServices.getBill(ID);
+        return res.data;
+      } catch (error) {
+        console.log(error);
       }
     },
   },
