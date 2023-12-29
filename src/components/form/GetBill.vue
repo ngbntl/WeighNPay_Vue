@@ -47,10 +47,10 @@
                     </div>
                 </div>
                 <div class="mb-4 text-center ">
-                    <button @click="addSight" class="p-2 bg-blue-500 text-white rounded-md mx-4">
+                    <button @click="addSight" class="p-2 bg-gray-600 text-white rounded-md mx-4 hover:bg-gray-400">
                         Thêm mới
                     </button>
-                    <button @click="handleOk" class="p-2 bg-blue-500 text-white rounded-md">
+                    <button @click="handleOk" class="p-2 bg-blue-500 text-white rounded-md hover:bg-blue-300    ">
                         Tính tiền
                     </button>
                     <div id="total-price" class="inline mx-5 font-bold text-lg">
@@ -107,13 +107,24 @@ export default {
         };
         const image = ref("");
         const getId = (index) => {
-            useFruit.getIdFruit().then(fruit => {
-                // Update the ID, name, and price properties for the specific row
-                dynamicValidateForm.value.fruits[index].ID = fruit.result.ID;
-                dynamicValidateForm.value.fruits[index].name = fruit.result.name;
-                dynamicValidateForm.value.fruits[index].price = fruit.result.price;
-                image.value = `${baseURL}/image/${fruit.image_path}`;
-            });
+            useFruit.getIdFruit()
+                .then(fruit => {
+                    // Assuming fruit is an object that contains result and image_path properties
+                    if (fruit?.result && typeof index !== 'undefined' && dynamicValidateForm?.value?.fruits?.[index]) {
+                        // Update the ID, name, and price properties for the specific row
+                        dynamicValidateForm.value.fruits[index].ID = fruit.result.ID;
+                        dynamicValidateForm.value.fruits[index].name = fruit.result.name;
+                        dynamicValidateForm.value.fruits[index].price = fruit.result.price;
+                        // Update image path
+                        image.value = `${baseURL}/image/${fruit.image_path}`;
+                    } else {
+                        image.value = `${baseURL}/image/${fruit}`;
+
+                    }
+                })
+                ;
+
+
 
         };
 

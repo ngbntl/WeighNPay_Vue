@@ -2,6 +2,8 @@ import { defineStore } from "pinia";
 import fruitServices from "../../apis/modules/fruits";
 import { useAuthStore } from "./auth";
 import adminServices from "../../apis/modules/admin";
+import { useToken } from "ant-design-vue/es/theme/internal";
+import { useToast } from "vue-toastification";
 export const useFruitStore = defineStore("useFruit", {
   state: () => ({
     fruitstmp: [],
@@ -57,8 +59,16 @@ export const useFruitStore = defineStore("useFruit", {
     async getIdFruit() {
       try {
         const response = await fruitServices.getIdFruit();
-        //console.log(response.data);
-        return response.data;
+        if (response.data.message == "Fruit not Found!") {
+          //console.log(response.data.image_path);
+          useToast().error("Quả không hợp lệ");
+          return response.data.image_path;
+        } else if (response.data.message == "Too much fruits!") {
+          useToast().error("Quá nhiều loại quả");
+          return response.data.image_path;
+        } else {
+          return response.data;
+        }
       } catch (error) {
         console.error("Error getting id fruit:", error);
         throw error;
@@ -85,7 +95,7 @@ export const useFruitStore = defineStore("useFruit", {
         //console.log(localStorage.getItem("img"));
         return src;
       } catch (error) {
-        console.log("Error al obtener la imagen");
+        console.log(error);
         throw error;
       }
     },
