@@ -111,9 +111,16 @@ export default {
         });
 
         const validateEmail = () => {
-            errors.value.email =
-                formData.value.email === "" ? "Vui lòng nhập email" : "";
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (formData.value.email === "") {
+                errors.value.email = "Vui lòng nhập email";
+            } else if (!emailRegex.test(formData.value.email)) {
+                errors.value.email = "Email không hợp lệ";
+            } else {
+                errors.value.email = ""; // No error
+            }
         };
+
 
         const validatePassword = () => {
             errors.value.password =
@@ -125,9 +132,17 @@ export default {
         };
 
         const validatePhone = () => {
-            errors.value.phone =
-                formData.value.phone === "" ? "Vui lòng nhập số điện thoại" : "";
+
+            const phoneRegex = /^(?:[0-9] ?){6,14}[0-9]$/;
+            if (formData.value.phone === "") {
+                errors.value.phone = "Vui lòng nhập số điện thoại";
+            } else if (!phoneRegex.test(formData.value.phone)) {
+                errors.value.phone = "Số điện thoại không hợp lệ";
+            } else {
+                errors.value.phone = "";
+            }
         };
+
 
         const validateAddress = () => {
             errors.value.address =

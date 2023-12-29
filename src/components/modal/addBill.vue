@@ -40,7 +40,9 @@
                                         hidden />
                                 </div>
                                 <div class="mr-4">
-                                    <input type="text" v-model="sight.weight"
+                                    <input type="number" v-model="sight.weight" v-bind:class="{
+                'border-red-500 placeholder-red-500': error.weight,
+              }" @input="validateWeight(sight.weight)"
                                         class="relative mb-2 bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-32 p-2.5 checked:bg-emerald-500"
                                         placeholder="Khối lượng" />
 
@@ -80,7 +82,10 @@ export default {
             fruits: [],
             area: undefined,
         });
-
+        const error = ref({
+            weight: ""
+        }
+        )
         const showModal = () => {
             open.value = true;
         };
@@ -119,11 +124,14 @@ export default {
                 weight: parseFloat(fruit.weight),
             }));
             useAdmin.addBill(resultArray);
-
-
-
-
-
+        };
+        const validateWeight = (weight) => {
+            const weightRegex = /^\d+(?:\.\d+)?$/;
+            if (weight === "") {
+                error.weight = "Vui lòng nhập cân nặng";
+            } else if (!weightRegex.test(weight)) {
+                error.weight = "Cân nặng phải là một số hợp lệ";
+            }
         };
 
         const resetForm = () => {
@@ -132,7 +140,11 @@ export default {
                 area: undefined,
             };
         };
-
+        const resetErrors = () => {
+            error.value = {
+                weight: "",
+            }
+        }
         useFruit.getAllFruits().then((fruit) => {
             fruitsOption.value = fruit;
         });
@@ -142,6 +154,7 @@ export default {
             showModal,
             handleOk,
             useFruit,
+            error,
             fruitsOption,
             dynamicValidateForm,
             fruits: useFruit.getAllFruits(),
@@ -149,6 +162,8 @@ export default {
             removeSight,
             addSight,
             saveValues,
+            validateWeight,
+            resetErrors,
         };
     },
 };

@@ -14,7 +14,7 @@
                         :class="{ 'border-red-500 placeholder-red-500': errors.name }" @input="validateName"
                         class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
                         :placeholder="formData.name" />
-                    <div class="text-red-500 absolute -mt-4 pt-3 left-8 text-xs">
+                    <div class="text-red-500 absolute -mt-4 pt-3 left-36 text-xs">
                         {{ errors.name }}
                     </div>
                 </div>
@@ -26,7 +26,7 @@
                         :class="{ 'border-red-500 placeholder-red-500': errors.email }" @input="validateEmail"
                         class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
                         :placeholder="formData.email" />
-                    <div class="text-red-500 absolute -mt-4 ml-3 pt-3 left-1/2 text-xs">
+                    <div class="text-red-500 absolute -mt-4 ml-20 pt-3 left-1/2 text-xs">
                         {{ errors.email }}
                     </div>
                 </div>
@@ -37,7 +37,7 @@
                         :class="{ 'border-red-500 placeholder-red-500': errors.phone }" @input="validatePhone"
                         class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
                         :placeholder="formData.phone" />
-                    <div class="text-red-500 absolute -mt-4 pt-3 left-8 text-xs">
+                    <div class="text-red-500 absolute -mt-4 pt-3 left-36 text-xs">
                         {{ errors.phone }}
                     </div>
                 </div>
@@ -52,7 +52,6 @@
                         {{ errors.birth }}
                     </div>
                 </div>
-
 
                 <div>
                     <label class="p-2 mb-2 text-md text-gray-500" for="">Giới tính:</label>
@@ -73,7 +72,7 @@
                         :class="{ 'border-red-500 placeholder-red-500': errors.address }" @input="validateAddress"
                         class="relative mb-2 bg-gray-50ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-80 p-2.5 checked:bg-emerald-500"
                         :placeholder="formData.address" />
-                    <div class="text-red-500 absolute -mt-4 pt-3 left-8 text-xs">
+                    <div class="text-red-500 absolute -mt-4 pt-3 ml-20 left-1/2 text-xs">
                         {{ errors.address }}
                     </div>
                 </div>
@@ -109,21 +108,13 @@ export default {
 
         const useAdmin = useAdminStore();
         onMounted(async () => {
-
             const user = await useAdmin.getUser();
-
             formData.value = { ...user };
-
             if (formData.value.birth) {
-
                 const birthDate = new Date(formData.value.birth);
-
-                formData.value.birth = birthDate.toISOString().split('T')[0];
-
+                formData.value.birth = birthDate.toISOString().split("T")[0];
             }
-
         });
-
 
         const update = () => {
             useAdmin.update(formData.value);
@@ -131,84 +122,71 @@ export default {
         };
 
         const formattedBirthDate = computed({
-
-            // Getter tra về ngày theo định dạng hiển thị
-
             get: () => {
-
                 if (!formData.value.birth) return "";
 
                 const birthDate = new Date(formData.value.birth);
 
-                return birthDate.toLocaleDateString('en-CA', { // Định dạng YYYY-MM-DD
-
-                    year: 'numeric',
-
-                    month: '2-digit',
-
-                    day: '2-digit',
-
+                return birthDate.toLocaleDateString("en-CA", {
+                    // Định dạng YYYY-MM-DD
+                    year: "numeric",
+                    month: "2-digit",
+                    day: "2-digit",
                 });
-
             },
-
-            // Setter cập nhật giá trị vào formData dựa trên input của người dùng
 
             set: (newValue) => {
-
                 if (newValue) {
-
-                    const [year, month, day] = newValue.split('-').map(Number);
-
+                    const [year, month, day] = newValue.split("-").map(Number);
                     const newBirthDate = new Date(Date.UTC(year, month - 1, day));
-
-                    formData.value.birth = newBirthDate.toISOString().split('T')[0];
-
-                    errors.value.birth = ''; // Nếu không có lỗi
-
+                    formData.value.birth = newBirthDate.toISOString().split("T")[0];
+                    errors.value.birth = ""; // Nếu không có lỗi
                 } else {
-
-                    errors.value.birth = 'Invalid date format';
-
+                    errors.value.birth = "Invalid date format";
                 }
-
             },
-
         });
 
-        // Placeholder for your validation functions
-
-        const validateName = () => {
-            /* ... */
+        const validateEmail = () => {
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (formData.value.email === "") {
+                errors.value.email = "Vui lòng nhập email";
+            } else if (!emailRegex.test(formData.value.email)) {
+                errors.value.email = "Email không hợp lệ";
+            } else {
+                errors.value.email = ""; // No error
+            }
         };
 
-        const validateEmail = () => {
-            /* ... */
+        const validateName = () => {
+            errors.value.name =
+                formData.value.name === "" ? "Vui lòng nhập họ tên" : "";
         };
 
         const validatePhone = () => {
-            /* ... */
+            const phoneRegex = /^(?:[0-9] ?){6,14}[0-9]$/;
+            if (formData.value.phone === "") {
+                errors.value.phone = "Vui lòng nhập số điện thoại";
+            } else if (!phoneRegex.test(formData.value.phone)) {
+                errors.value.phone = "Số điện thoại không hợp lệ";
+            } else {
+                errors.value.phone = "";
+            }
         };
 
         const validateAddress = () => {
-            /* ... */
+            errors.value.address =
+                formData.value.address === "" ? "Vui lòng nhập địa chỉ" : "";
         };
 
         return {
             update,
-
             formData,
-
             errors,
-
             formattedBirthDate,
-
             validateName,
-
             validateEmail,
-
             validatePhone,
-
             validateAddress,
         };
     },

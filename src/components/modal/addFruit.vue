@@ -36,7 +36,7 @@
                             {{ errors.price }}
                         </div>
                     </div>
-                    <div class="">
+                    <!-- <div class="">
                         <input type="text" v-model="formData.exist" v-bind:class="{
                 'border-red-500 placeholder-red-500': errors.exist,
               }" @input="validateExist"
@@ -45,7 +45,7 @@
                         <div class="text-red-500 absolute -mt-4 ml-3 pt-3 left-1/2 text-xs">
                             {{ errors.exist }}
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="">
                     <textarea v-model="formData.description" v-bind:class="{
@@ -118,11 +118,18 @@ export default {
         };
 
         const validatePrice = () => {
-            errors.value.price =
-                formData.value.price === "" ? "Vui lòng nhập giá tiền" : "";
+            let numberRegex = /^[0-9]+$/;
+            if (formData.value.price === "") {
+                errors.value.price = "Vui lòng nhập giá tiền";
+            } else if (!numberRegex.test(formData.value.price)) {
+                errors.value.price = "Giá tiền chỉ được phép chứa số";
+            } else {
+                errors.value.price = "";
+            }
         };
 
-        // Add Fruits
+
+
         const useFruits = useFruitStore();
 
         const add = () => {
@@ -133,7 +140,6 @@ export default {
 
         };
         const resetForm = () => {
-            // Reset form data and errors
             formData.value = {
                 name: "",
                 description: "",
@@ -145,7 +151,6 @@ export default {
         };
 
         const resetErrors = () => {
-            // Reset error messages
             errors.value = {
                 name: "",
                 description: "",
