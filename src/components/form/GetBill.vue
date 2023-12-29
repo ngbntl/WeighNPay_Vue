@@ -100,7 +100,6 @@ export default {
 
         const getWeight = (index) => {
             useFruit.getWeight().then(weight => {
-                // Update the weight property for the specific row
                 dynamicValidateForm.value.fruits[index].weight = weight;
                 console.log(weight);
             });
