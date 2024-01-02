@@ -56,9 +56,9 @@ export const useFruitStore = defineStore("useFruit", {
       }
     },
 
-    async getIdFruit() {
+    async getIdFruit(id) {
       try {
-        const response = await fruitServices.getIdFruit();
+        const response = await fruitServices.getIdFruit(id);
         if (response.data.message == "Fruit not Found!") {
           //console.log(response.data.image_path);
           useToast().error("Quả không hợp lệ");
@@ -75,9 +75,9 @@ export const useFruitStore = defineStore("useFruit", {
       }
     },
 
-    async getWeight() {
+    async getWeight(id) {
       try {
-        const response = await fruitServices.getWeight();
+        const response = await fruitServices.getWeight(id);
         // console.log(response.data.weight);
         return response.data.weight;
       } catch (error) {
@@ -90,9 +90,7 @@ export const useFruitStore = defineStore("useFruit", {
         const response = await fruitServices.getImage(img);
         let blob = new Blob([response.data], { type: "image" });
         const src = URL.createObjectURL(blob);
-
         localStorage.setItem("img", src);
-        //console.log(localStorage.getItem("img"));
         return src;
       } catch (error) {
         console.log(error);

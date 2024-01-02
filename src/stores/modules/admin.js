@@ -80,7 +80,9 @@ export const useAdminStore = defineStore("useAdmin", {
     async activeAcc(ID) {
       try {
         const response = await adminServices.activeAcc(ID);
-        if (response.message == "Account activated") {
+        console.log(response);
+        if (response.data.message == "Account activated") {
+          await window.location.reload();
           useToast().success("đã mở khóa");
         }
       } catch (error) {

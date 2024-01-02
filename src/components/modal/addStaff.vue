@@ -143,7 +143,6 @@ export default {
             }
         };
 
-
         const validateAddress = () => {
             errors.value.address =
                 formData.value.address === "" ? "Vui lòng nhập địa chỉ" : "";
