@@ -1,16 +1,19 @@
 <template>
     <div class="text-center p-3 flex-auto leading-6">
         <h2 class="text-2xl font-bold py-4 text-gray-500">Tạo hóa đơn</h2>
+
         <div class="gap-4 text-left mt-3">
             <div class="text-center">
-                <div class="relative left-5 -ml-28 mb-2">
+                <div class="relative left-5 -ml-40 mb-2">
                     <span class="mb-2 mr-4 text-md font-bold uppercase text-gray-500 text-left">STT</span>
                     <span class="pl-7 pr-16 mb-2 mr-4 ml-text-md font-bold uppercase text-gray-500 text-left">Loại
                         quả</span>
-                    <span class="pr-2 mb-2 mr-14 ml-text-md font-bold uppercase text-gray-500 text-left">Giá</span>
-                    <span class="px-8 mb-2 text-md font-bold uppercase text-gray-500 text-left">Khối lượng</span>
+                    <span class="pr-2 mb-2 mr-12 ml-text-md font-bold uppercase text-gray-500 text-left">Giá</span>
+                    <span class="px-4 mb-2 text-md font-bold uppercase text-gray-500 text-left">Khối lượng</span>
+                    <span class="px-6 mb-2 text-md font-bold uppercase text-gray-500 text-left">Chọn cân</span>
+
                 </div>
-                <div v-for="(sight, index) in dynamicValidateForm.fruits" :key="index" class="relative text-center">
+                <div v-for="(sight, index) in dynamicValidateForm.fruits" :key="index" class="relative text-center -ml-20">
                     <div class="flex text-center ml-60 mb-4 items-baseline">
                         <div class="mr-4">
                             <input type="text" :value=" (index + 1)"
@@ -31,6 +34,14 @@
                             <input type="text" :value="sight.weight "
                                 class="relative mb-2 bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-32 p-2.5 checked:bg-emerald-500"
                                 @input="updateWeight(index, $event.target.value)" />
+                        </div>
+                        <div class="mr-4">
+                            <select name="role" v-model="sight.scale_id"
+                                class=" mb-2 bg-gray-50 ring-0 outline-none border border-neutral-500 text-neutral-900 placeholder-violet-700 text-sm rounded-lg focus:ring-violet-500 focus:border-violet-500 block w-20 p-2.5 checked:bg-emerald-500">
+                                <option value="0">Cân 1</option>
+                                <option value="1">Cân 2</option>
+                            </select>
+
                         </div>
                         <button @click="getWeight(index)"
                             class="mr-2 cursor-pointer transition-all bg-green-500 text-white px-6 py-2 rounded-lg border-green-600 border-b-[4px] hover:brightness-110 hover:-translate-y-[1px] hover:border-b-[6px] active:border-b-[2px] active:brightness-90 active:translate-y-[2px]">
@@ -86,7 +97,7 @@ export default {
                     ID: '',
                     name: '',
                     weight: '',
-                    price: '',
+                    scale_id: "0",
                     placeholderName: '',
                     placeholderPrice: '',
                     placeholderWeight: '',
@@ -99,18 +110,22 @@ export default {
         };
 
         const getWeight = (index) => {
-            useFruit.getWeight().then(weight => {
+            const scale_id = dynamicValidateForm.value.fruits[index].scale_id
+
+            useFruit.getWeight({ scale_id }).then(weight => {
                 dynamicValidateForm.value.fruits[index].weight = weight;
                 console.log(weight);
             });
         };
         const image = ref("");
         const getId = (index) => {
-            useFruit.getIdFruit()
+            const scale_id = dynamicValidateForm.value.fruits[index].scale_id
+
+            useFruit.getIdFruit({ scale_id })
                 .then(fruit => {
-                    // Assuming fruit is an object that contains result and image_path properties
+
                     if (fruit?.result && typeof index !== 'undefined' && dynamicValidateForm?.value?.fruits?.[index]) {
-                        // Update the ID, name, and price properties for the specific row
+
                         dynamicValidateForm.value.fruits[index].ID = fruit.result.ID;
                         dynamicValidateForm.value.fruits[index].name = fruit.result.name;
                         dynamicValidateForm.value.fruits[index].price = fruit.result.price;
@@ -160,6 +175,7 @@ export default {
             dynamicValidateForm,
             cost,
             image,
+
             addSight,
             getWeight,
             getId,

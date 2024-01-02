@@ -25,15 +25,15 @@ export default {
       },
     });
   },
-  getIdFruit() {
-    return Api().get("getID", {
+  getIdFruit(id) {
+    return Api().post("getID", id, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     });
   },
-  getWeight() {
-    return Api().get("getWeight", {
+  getWeight(id) {
+    return Api().post("getWeight", id, {
       headers: {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },

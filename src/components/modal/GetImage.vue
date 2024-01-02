@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { ref } from 'vue';
 export default {
     props: ["image_path"],
     setup(props) {

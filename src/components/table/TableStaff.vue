@@ -113,10 +113,6 @@ export default {
             useAdmin.activeAcc(ID);
 
 
-
-            window.location.reload();
-            useToast.success("Mở khóa thành công");
-
         };
         const lockAcc = async (ID) => {
 
@@ -124,8 +120,6 @@ export default {
             window.location.reload();
             useToast.success("Khóa thành công")
         };
-
-
         return {
             formatDate,
             activeAcc,
