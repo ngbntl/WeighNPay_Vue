@@ -28,7 +28,7 @@ export const useFruitStore = defineStore("useFruit", {
       try {
         const response = await fruitServices.addFruit(fruit);
         useToast().success("Thêm thành công");
-        console.log(response);
+        this.getAllFruits();
         return response;
       } catch (error) {
         console.error("Error adding fruit:", error);
@@ -41,6 +41,7 @@ export const useFruitStore = defineStore("useFruit", {
         const response = await fruitServices.updateFruit(fruit);
 
         useToast().success("Cập nhật thành công");
+        this.getAllFruits();
         return response; // return the response for handling in components
       } catch (error) {
         console.error("Error updating fruit:", error);
@@ -51,8 +52,8 @@ export const useFruitStore = defineStore("useFruit", {
     async deleteFruit(id) {
       try {
         const response = await fruitServices.deleteFruit(id);
-        console.log(response);
         useToast().success("Xóa thành công");
+        this.getAllFruits();
         return response; // return the response for handling in components
       } catch (error) {
         console.error("Error deleting fruit:", error);
@@ -71,6 +72,7 @@ export const useFruitStore = defineStore("useFruit", {
           useToast().error("Quá nhiều loại quả");
           return response.data.image_path;
         } else {
+          useToast().success("Nhận diện thành công");
           return response.data;
         }
       } catch (error) {

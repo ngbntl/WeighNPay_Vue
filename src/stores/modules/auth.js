@@ -17,6 +17,8 @@ export const useAuthStore = defineStore("auth", {
           useToast().warning("Không tìm thấy email");
         } else if (message == "Wrong Password") {
           useToast().error("Sai mật khẩu");
+        } else if (message == "Invalid account") {
+          useToast().error("Tài khoản đang bị khóa");
         } else {
           useToast().success("Đăng nhập thành công");
         }

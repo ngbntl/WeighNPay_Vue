@@ -7,11 +7,14 @@
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-3 py-3 text-xs font-bold text-left text-gray-500 uppercase">
-                                    ID
+                                    STT
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
                                     Ngày tạo
                                 </th>
+                                <!-- <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
+                                    Thời gian
+                                </th> -->
                                 <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
                                     Người tạo
                                 </th>
@@ -21,10 +24,10 @@
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
-                            <tr v-for="(bill, index) in bills" :key="index"
+                            <tr v-for="(bill, index) in bills.sort(compareByDate)" :key="index"
                                 class="text-left hover:cursor-pointer hover:text-blue-500" @click="showModal(bill.bill_id)">
                                 <td class="px-3 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
-                                    {{ bill.bill_id }}
+                                    {{index+1}}
                                 </td>
                                 <td class="px-6 py-4 text-sm  whitespace-nowrap">
                                     {{ formatDate(bill.Date) }}
@@ -59,14 +62,15 @@
                                 <td class="px-5 py-3">{{ fruit.name }}</td>
                                 <td class="px-5 py-3">{{ fruit.weight }}</td>
                                 <td class="px-5 py-3">{{ fruit.price }}</td>
-                                <td class="px-5 py-3">{{ fruit.price * fruit.weight }}</td>
+                                <td class="px-5 py-3">{{ (fruit.price * fruit.weight) }}</td>
                             </tr>
                         </tbody>
                     </table>
 
                     <div class="text-left mt-2 font-bold text-gray-500">
 
-                        <span v-if="selectedBill.total_price">Tổng giá trị hóa đơn: {{ selectedBill.total_price }}
+                        <span v-if="selectedBill.total_price">Tổng giá trị hóa đơn: {{ (selectedBill.total_price).toFixed(2)
+                            }}
                             vnd</span>
 
 
@@ -130,6 +134,7 @@ export default {
         };
         const formatDate = (value) => {
             try {
+                console.log(value)
                 const date = new Date(value.replace('GMT', ''));
                 if (isNaN(date)) {
                     return 'Invalid Date';
@@ -141,6 +146,20 @@ export default {
                 return 'Error';
             }
         };
+        const compareByDate = (a, b) => {
+            const date1 = a.Date;
+            const date2 = b2.Date;
+
+            if (date1 < date2) {
+                return -1;
+            } else if (date1 > date2) {
+                return 1;
+            } else {
+                return 0;
+            }
+        }
+
+
 
         return {
             open,

@@ -1,34 +1,35 @@
 <template>
-    <div class="text-end my-5 mx-2">
-        <add-bill />
-    </div>
-    <div>
-        <table-bills :bills="bills" />
-
+    <div class="relative">
+        <div class="text-end my-5 mx-2">
+            <add-bill />
+        </div>
+        <div class="scroll-container">
+            <table-bills :bills="bills" />
+        </div>
     </div>
 </template>
-<script>
-import { ref } from 'vue';
+  
+<script setup>
+import { computed, onMounted } from 'vue';
 import TableBills from '../../../components/table/TableBills.vue';
 import { useAdminStore } from '../../../stores/modules/admin';
 import AddBill from '../../../components/modal/addBill.vue';
 
-export default {
-    components: { TableBills, AddBill },
-    setup() {
-        const bills = ref([]);
-        const useAdmin = useAdminStore();
+const adminStore = useAdminStore();
 
-        useAdmin.getAllBills().then((bill) => {
-            bills.value = bill
-            // console.log(bill);
-        })
-        return {
-            bills,
-            useAdmin
+onMounted(async () => {
+    await adminStore.getAllBills();
+});
 
-        }
-    }
-}
+const bills = computed(() => adminStore.bills);
 </script>
+  
+<style>
+  .scroll-container {
+    position: relative;
+    max-height: 700px;
+    overflow-y: auto;
+    /* Cho phép cuộn dọc nếu nội dung dài hơn chiều cao của container. */
+  }
+  </style>
   
