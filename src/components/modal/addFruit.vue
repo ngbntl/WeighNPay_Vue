@@ -78,7 +78,7 @@ export default {
             add();
             console.log(e);
             open.value = false;
-            window.location.reload();
+
         };
 
         // Validate

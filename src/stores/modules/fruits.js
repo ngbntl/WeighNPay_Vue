@@ -6,13 +6,17 @@ import { useToken } from "ant-design-vue/es/theme/internal";
 import { useToast } from "vue-toastification";
 export const useFruitStore = defineStore("useFruit", {
   state: () => ({
-    fruitstmp: [],
+    fruits: [],
+    fruitNames: [],
   }),
 
   actions: {
     async getAllFruits() {
       try {
         const response = await fruitServices.getFruits();
+        this.fruits = response.data;
+        //this.fruitNames = response.data.map((data) => data.name);
+        console.log(this.fruitNames);
         return response.data;
       } catch (error) {
         console.error("Error fetching fruits:", error);
@@ -25,7 +29,7 @@ export const useFruitStore = defineStore("useFruit", {
         const response = await fruitServices.addFruit(fruit);
         useToast().success("Thêm thành công");
         console.log(response);
-        return response; // return the response for handling in components
+        return response;
       } catch (error) {
         console.error("Error adding fruit:", error);
         throw error;

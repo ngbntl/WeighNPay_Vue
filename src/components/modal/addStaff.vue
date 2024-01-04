@@ -71,7 +71,7 @@
         </a-modal>
     </div>
 </template>
-  
+
 <script>
 import { ref } from "vue";
 import { useAdminStore } from "../../stores/modules/admin";
@@ -91,7 +91,6 @@ export default {
             open.value = false;
         };
 
-        // Validate
         const formData = ref({
             email: "",
             password: "",
@@ -121,18 +120,17 @@ export default {
             }
         };
 
-
         const validatePassword = () => {
             errors.value.password =
                 formData.value.password === "" ? "Vui lòng nhập mật khẩu" : "";
         };
 
         const validateName = () => {
-            errors.value.name = formData.value.name === "" ? "Vui lòng nhập họ tên" : "";
+            errors.value.name =
+                formData.value.name === "" ? "Vui lòng nhập họ tên" : "";
         };
 
         const validatePhone = () => {
-
             const phoneRegex = /^(?:[0-9] ?){6,14}[0-9]$/;
             if (formData.value.phone === "") {
                 errors.value.phone = "Vui lòng nhập số điện thoại";
@@ -152,19 +150,15 @@ export default {
             errors.value.role =
                 formData.value.role === null ? "Vui lòng chọn vai trò" : "";
         };
-
-        // Add Admin
         const useAdmin = useAdminStore();
 
         const add = () => {
             formData.value.role = parseInt(formData.value.role, 10);
             useAdmin.addStaff(formData.value);
             resetForm();
-            // window.location.reload();
         };
 
         const resetForm = () => {
-            // Reset form data and errors
             formData.value = {
                 email: "",
                 password: "",
@@ -177,7 +171,6 @@ export default {
         };
 
         const resetErrors = () => {
-            // Reset error messages
             errors.value = {
                 email: "",
                 password: "",
@@ -205,4 +198,3 @@ export default {
     },
 };
 </script>
-  

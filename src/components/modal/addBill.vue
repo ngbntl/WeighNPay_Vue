@@ -72,6 +72,7 @@ import { MinusCircleOutlined } from "@ant-design/icons-vue";
 import { ref } from "vue";
 import { useFruitStore } from "../../stores/modules/fruits";
 import { useAdminStore } from "../../stores/modules/admin";
+import { storeToRefs } from "pinia";
 export default {
     components: { MinusCircleOutlined },
     setup() {
@@ -88,11 +89,13 @@ export default {
         )
         const showModal = () => {
             open.value = true;
+
         };
 
         const handleOk = () => {
-            open.value = false;
             saveValues();
+            open.value = false;
+
         };
 
         const removeSight = (item) => {
@@ -124,6 +127,7 @@ export default {
                 weight: parseFloat(fruit.weight),
             }));
             useAdmin.addBill(resultArray);
+            resetForm();
         };
         const validateWeight = (weight) => {
             const weightRegex = /^\d+(?:\.\d+)?$/;
@@ -157,13 +161,14 @@ export default {
             error,
             fruitsOption,
             dynamicValidateForm,
-            fruits: useFruit.getAllFruits(),
             resetForm,
             removeSight,
             addSight,
             saveValues,
             validateWeight,
             resetErrors,
+            ...storeToRefs(useFruit),
+            fruits: useFruit.fruits
         };
     },
 };

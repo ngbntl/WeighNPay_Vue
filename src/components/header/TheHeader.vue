@@ -86,10 +86,10 @@ export default {
             open.value = true;
         };
 
-        useAdmin.getUser().then(users => {
-            user.email = users.email;
-            user.name = users.name;
-        });
+
+        user.email = useAdmin.user.email;
+        user.name = useAdmin.user.name;
+
 
         const logout = () => {
             const credentials = {

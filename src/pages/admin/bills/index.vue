@@ -7,29 +7,17 @@
 
     </div>
 </template>
-<script>
-import { ref } from 'vue';
+<script setup>
+import { computed, onMounted, ref } from 'vue';
 import TableBills from '../../../components/table/TableBills.vue';
 import { useAdminStore } from '../../../stores/modules/admin';
 import AddBill from '../../../components/modal/addBill.vue';
+components: { TableBills, AddBill };
+const adminStore = useAdminStore();
+onMounted(async () => {
+    await adminStore.getAllBills()
+})
+const bills = computed(() => adminStore.bills)
 
-export default {
-    components: { TableBills, AddBill },
-    setup() {
-        const bills = ref([]);
-        const useAdmin = useAdminStore();
-
-        useAdmin.getAllBills().then((bill) => {
-            bills.value = bill
-            // console.log(bill);
-        });
-
-        return {
-            bills,
-            useAdmin
-
-        }
-    }
-}
 </script>
   

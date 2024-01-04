@@ -6,32 +6,28 @@
     <router-view />
 </template>
 
-<script>
-import { ref } from 'vue';
+<script setup>
+import { computed, onMounted, ref } from 'vue';
 import TableStaff from '../../../components/table/TableStaff.vue';
 import { useAdminStore } from '../../../stores/modules/admin';
 import AddStaff from '../../../components/modal/addStaff.vue';
-export default {
-    components: { TableStaff, AddStaff },
-    setup() {
-        const staffs = ref([]);
-        const adminStore = useAdminStore();
+components: { TableStaff, AddStaff };
 
-        adminStore.getAllStaff().then((staff) => {
-            staffs.value = staff;
-            console.log(staff);
+const adminStore = useAdminStore();
 
-
-        });
-        return {
-            staffs,
-        }
+onMounted(async () => {
+    await adminStore.getAllStaff()
+})
+const staffs = computed(() => adminStore.staffs)
 
 
 
-    }
 
-}
+
+
+
+
+
 </script>
 
 <style>

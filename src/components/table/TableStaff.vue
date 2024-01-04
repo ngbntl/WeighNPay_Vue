@@ -28,10 +28,8 @@
                                     Địa chi
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
-                                    Thao tác
+                                    Tình trạng
                                 </th>
-
-
                             </tr>
                         </thead>
                         <tbody class="divide-y divide-gray-200">
@@ -43,7 +41,7 @@
                                     {{ staff.name }}
                                 </td>
                                 <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
-                                    {{ staff.sex ? "Nam":"Nữ" }}
+                                    {{ staff.sex ? "Nam" : "Nữ" }}
                                 </td>
                                 <td class="px-6 py-4 text-sm text-gray-800 whitespace-nowrap">
                                     {{ formatDate(staff.birth) }}
@@ -59,11 +57,12 @@
                                 </td>
 
                                 <td class="px-6 py-4 text-sm font-medium text-left whitespace-nowrap">
-                                    <a class="text-green-500 hover:text-green-700" href="#" v-if="!staff.valid"
-                                        @click="activeAcc(staff.ID)">
+                                    <a class="text-green-500 hover:text-green-700" href="#" v-if="!staffValidStates[index]"
+                                        @click="activeAcc(staff.ID, index)">
                                         Mở khóa
                                     </a>
-                                    <a class="text-red-500 hover:text-red-700" href="#" v-else @click="lockAcc(staff.ID)">
+                                    <a class="text-red-500 hover:text-red-700" href="#" v-else
+                                        @click="lockAcc(staff.ID, index)">
                                         Khóa
                                     </a>
                                 </td>
@@ -73,8 +72,6 @@
                                     </a>
                                 </td> -->
                             </tr>
-
-
                         </tbody>
                     </table>
                 </div>
@@ -83,49 +80,51 @@
     </div>
 </template>
 <script>
-import { useToast } from 'vue-toastification';
-import { useAdminStore } from '../../stores/modules/admin';
-
+import { useToast } from "vue-toastification";
+import { useAdminStore } from "../../stores/modules/admin";
+import { storeToRefs } from "pinia";
+import { watch } from "vue";
 export default {
     name: "TableStaff",
     props: {
         staffs: {
             type: Array,
             required: true,
-        }
+        },
     },
     setup(props) {
         const formatDate = (value) => {
             try {
-                const date = new Date(value.replace('GMT', ''));
+                const date = new Date(value.replace("GMT", ""));
                 if (isNaN(date)) {
-                    return 'Invalid Date';
+                    return "Invalid Date";
                 }
-                const options = { day: 'numeric', month: 'numeric', year: 'numeric' };
-                return date.toLocaleDateString('en-US', options);
+                const options = { day: "numeric", month: "numeric", year: "numeric" };
+                return date.toLocaleDateString("en-US", options);
             } catch (error) {
-                console.error('Error formatting date:', error);
-                return ' ';
+                console.error("Error formatting date:", error);
+                return " ";
             }
         };
         const useAdmin = useAdminStore();
-        const activeAcc = (ID) => {
-            useAdmin.activeAcc(ID);
 
-
+        const activeAcc = async (staff, index) => {
+            const newValidState = await useAdmin.activeAcc(staff);
+            useAdmin.staffValidStates[index] = 1;
+            console.log(newValidState);
         };
-        const lockAcc = async (ID) => {
 
-            await useAdmin.lockAcc(ID);
-            window.location.reload();
-            useToast.success("Khóa thành công")
+        const lockAcc = async (staff, index) => {
+            const newValidState = await useAdmin.lockAcc(staff);
+            useAdmin.staffValidStates[index] = 0;
+            console.log(newValidState);
         };
         return {
             formatDate,
             activeAcc,
-            lockAcc
+            lockAcc,
+            ...storeToRefs(useAdmin),
         };
-    }
-}
+    },
+};
 </script>
-
