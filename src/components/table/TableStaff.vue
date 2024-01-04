@@ -1,9 +1,9 @@
 <template>
     <div class="flex flex-col">
-        <div class="overflow-x-auto">
-            <div class="p-1.5 w-full inline-block align-middle">
+        <div class="">
+            <div class=" w-max inline-block align-middle">
                 <div class="overflow-hidden border rounded-lg">
-                    <table class="min-w-full divide-y divide-gray-200">
+                    <table class=" divide-y divide-gray-200">
                         <thead class="bg-gray-50">
                             <tr>
                                 <th scope="col" class="px-3 py-3 text-xs font-bold text-left text-gray-500 uppercase">
@@ -28,7 +28,7 @@
                                     Địa chi
                                 </th>
                                 <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
-                                    Tình trạng
+                                    Hành động
                                 </th>
                             </tr>
                         </thead>

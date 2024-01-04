@@ -12,9 +12,9 @@
                                 <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
                                     Ngày tạo
                                 </th>
-                                <!-- <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
+                                <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
                                     Thời gian
-                                </th> -->
+                                </th>
                                 <th scope="col" class="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase">
                                     Người tạo
                                 </th>
@@ -31,6 +31,9 @@
                                 </td>
                                 <td class="px-6 py-4 text-sm  whitespace-nowrap">
                                     {{ formatDate(bill.Date) }}
+                                </td>
+                                <td class="px-6 py-4 text-sm  whitespace-nowrap">
+                                    {{ formatTime(bill.Date) }}
                                 </td>
                                 <td class="px-6 py-4 text-sm  whitespace-nowrap">
                                     {{ bill.user_id }}
@@ -146,6 +149,21 @@ export default {
                 return 'Error';
             }
         };
+        const formatTime = (value) => {
+            try {
+                const date = new Date(value.replace('GMT', ''));
+                if (isNaN(date)) {
+                    return 'Invalid Date';
+                }
+
+                const options = { hour: 'numeric', minute: 'numeric' };
+                return date.toLocaleTimeString('en-US', options);
+            } catch (error) {
+                console.error('Error formatting time:', error);
+                return 'Error';
+            }
+        };
+
         const compareByDate = (a, b) => {
             const date1 = a.Date;
             const date2 = b2.Date;
@@ -164,10 +182,10 @@ export default {
         return {
             open,
             selectedBill,
-
             showModal,
             handleOk,
             formatDate,
+            formatTime
         };
     },
 };
