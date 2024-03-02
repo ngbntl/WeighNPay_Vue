@@ -1,7 +1,28 @@
-# Vue 3 + Vite
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# WeighNPay 
 
-## Recommended IDE Setup
+WeighNPay is a website that helps support fruit store management with automatic weighing and billing
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+
+## Installation
+
+1. Server: https://github.com/ngbntl/WeighNPay-Flask
+   ```bash
+    pip install flask
+    python app.py
+    ```
+
+
+2. Client
+
+```bash
+  npm install WeighNPay_Vue
+  cd WeighNPay_Vue
+  npm install
+  npm run dev
+```
+
+    
+## Demo
+
+
